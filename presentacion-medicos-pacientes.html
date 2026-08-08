@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Presentación e Infografía de Impacto Pantalla Completa</title>
+  <title>Doctors as Patients: Presentación con Ilustraciones Protagonistas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -76,7 +76,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px 24px;
+      padding: 16px 20px;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -87,18 +87,18 @@
       visibility: visible;
     }
 
-    /* Hero Card maximizing 97vw and 94vh space */
+    /* Hero Card maximizing 98vw and 96vh space */
     .slide-card-hero {
-      width: 97vw;
-      height: 94vh;
-      background: rgba(15, 23, 42, 0.92);
+      width: 98vw;
+      height: 96vh;
+      background: rgba(15, 23, 42, 0.94);
       border: 2px solid var(--accent-cyan);
       border-radius: 24px;
-      padding: 28px 36px;
-      box-shadow: 0 25px 90px rgba(0, 0, 0, 0.95), 0 0 60px rgba(6, 182, 212, 0.4);
+      padding: 24px 32px;
+      box-shadow: 0 25px 90px rgba(0, 0, 0, 0.95), 0 0 70px rgba(6, 182, 212, 0.45);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 16px;
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       transform: translateY(20px) scale(0.99);
@@ -152,72 +152,93 @@
 
     .slide-title-text {
       font-family: var(--font-title);
-      font-size: 2.8rem;
+      font-size: 2.6rem;
       font-weight: 900;
       line-height: 1.2;
       color: #ffffff;
       border-left: 8px solid var(--accent-cyan);
-      padding-left: 24px;
+      padding-left: 20px;
       text-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
-      margin: 8px 0;
     }
 
-    /* Split Content Layout filling full height */
+    /* EQUAL 50/50 SPLIT SCREEN LAYOUT WITH PROTAGONIST ILLUSTRATION */
     .slide-content-split {
       display: grid;
-      grid-template-columns: 520px 1fr;
-      gap: 32px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
       flex: 1;
+      min-height: 0; /* Prevents overflow */
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1100px) {
       .slide-content-split {
         grid-template-columns: 1fr;
       }
     }
 
+    /* PROTAGONIST ILLUSTRATION CONTAINER - 50% WIDTH & 100% HEIGHT */
     .slide-illustration-box {
       width: 100%;
       height: 100%;
-      max-height: 480px;
       border-radius: 20px;
       overflow: hidden;
-      border: 3px solid rgba(6, 182, 212, 0.5);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.3);
+      border: 3px solid var(--accent-cyan);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(6, 182, 212, 0.4);
       position: relative;
+      cursor: pointer;
     }
 
     .slide-illustration-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .slide-illustration-box:hover img {
-      transform: scale(1.04);
+      transform: scale(1.06);
+    }
+
+    .image-zoom-badge {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(9, 13, 22, 0.85);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      padding: 8px 16px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .right-content-pane {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
+      justify-content: space-between;
       height: 100%;
-      justify-content: center;
     }
 
     .slide-stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      flex: 1;
     }
 
     /* Staggered Card Animation */
     @keyframes fadeInUpStagger {
       from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -227,12 +248,12 @@
 
     .stat-box {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 24px 26px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      padding: 18px 22px;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      align-items: center;
+      gap: 20px;
       position: relative;
       overflow: hidden;
       transition: all 0.3s ease;
@@ -242,20 +263,21 @@
     .stat-box:hover {
       background: rgba(255, 255, 255, 0.09);
       border-color: var(--accent-cyan);
-      transform: translateY(-4px);
-      box-shadow: 0 14px 36px rgba(6, 182, 212, 0.3);
+      transform: translateX(6px);
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
     }
 
     /* Animated Stat Number */
     .stat-number {
       font-family: var(--font-title);
-      font-size: 3.4rem;
+      font-size: 3.2rem;
       font-weight: 900;
       color: var(--accent-cyan);
       line-height: 1;
+      min-width: 140px;
       display: flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
     }
 
     .stat-number.red {
@@ -278,6 +300,13 @@
       text-shadow: 0 0 25px rgba(16, 185, 129, 0.7);
     }
 
+    .stat-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
     .stat-label {
       font-size: 1.15rem;
       font-weight: 800;
@@ -286,21 +315,20 @@
     }
 
     .stat-desc {
-      font-size: 0.95rem;
+      font-size: 0.925rem;
       color: #cbd5e1;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     /* APA Citation Box inside Card Footer */
     .apa-card-footer {
       background: rgba(6, 182, 212, 0.1);
       border: 1px solid rgba(6, 182, 212, 0.3);
-      border-radius: 16px;
-      padding: 14px 22px;
-      font-size: 0.9rem;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 0.875rem;
       color: #cbd5e1;
-      line-height: 1.45;
-      margin-top: 10px;
+      line-height: 1.4;
     }
 
     .apa-card-footer strong {
@@ -314,7 +342,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 6px;
+      margin-top: 4px;
       position: relative;
     }
 
@@ -342,6 +370,53 @@
 
     .slide-visual-frame.active .energy-gauge-bar {
       animation: drainEnergy 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* FULLSCREEN CINEMA IMAGE MODAL */
+    .cinema-image-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      padding: 30px;
+    }
+
+    .cinema-image-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cinema-image-modal img {
+      max-width: 95vw;
+      max-height: 90vh;
+      border-radius: 20px;
+      border: 3px solid var(--accent-cyan);
+      box-shadow: 0 0 80px rgba(6, 182, 212, 0.6);
+    }
+
+    .cinema-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 800;
     }
 
     /* Blur Backdrop for Auto-Stop Focus Mode */
@@ -853,7 +928,7 @@
       <iframe id="youtube-player" src="https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?enablejsapi=1&rel=0&start=23&cc_load_policy=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <!-- Visual Infographic Slide Frame (Moments 7-11) - MAXIMIZED VIEWPORT SPACE -->
+    <!-- Visual Infographic Slide Frame (Moments 7-11) - MAXIMIZED PROTAGONIST LAYOUT -->
     <div class="slide-visual-frame" id="slide-visual-frame">
       <div class="slide-card-hero">
         <div class="slide-badge-row">
@@ -876,10 +951,11 @@
           </div>
         </div>
 
-        <!-- Split Content Layout with Large Illustration Image & Expanded Right Pane -->
+        <!-- 50/50 Split Content Layout with Protagonist Illustration Image -->
         <div class="slide-content-split">
-          <div class="slide-illustration-box">
-            <img id="slide-illustration-img" src="images/moment_7.jpg" alt="Ilustración Médica">
+          <div class="slide-illustration-box" onclick="openCinemaImageModal()">
+            <img id="slide-illustration-img" src="images/moment_7.jpg" alt="Ilustración Médica Protagonista">
+            <div class="image-zoom-badge">🔍 Ampliar Imagen</div>
           </div>
           
           <div class="right-content-pane">
@@ -894,6 +970,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- FULLSCREEN CINEMA IMAGE MODAL -->
+    <div class="cinema-image-modal" id="cinema-image-modal" onclick="closeCinemaImageModal()">
+      <button class="cinema-close-btn" onclick="closeCinemaImageModal()">✕ Cerrar Vista Cine</button>
+      <img id="cinema-modal-img" src="images/moment_7.jpg" alt="Ilustración Médica a Pantalla Completa">
     </div>
 
     <!-- Video Blur Backdrop -->
@@ -1061,7 +1143,7 @@
         apaCitation: "Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients [Documental; Testimonio de Escucha]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w?t=3179"
       },
 
-      // SECCIÓN INFOGRÁFICA PANTALLA COMPLETA CON ILUSTRACIONES Y CITAS APA 7ª ED. (Momento 7 a 11)
+      // SECCIÓN INFOGRÁFICA CON ILUSTRACIONES PROTAGONISTAS AL 50% Y CITAS APA 7ª ED. (Momento 7 a 11)
       {
         id: 7,
         type: 'infographic',
@@ -1105,7 +1187,7 @@
         dialogueEN: "Patients wait between 3 and 5 years to receive an accurate diagnosis. More than 84% of affected individuals remain undiagnosed and neglected.",
         apaCitation: "Institute of Medicine Committee on the Diagnostic Criteria for Myalgic Encephalomyelitis/Chronic Fatigue Syndrome. (2015). Beyond myalgic encephalomyelitis/chronic fatigue syndrome: Redefining an illness. The National Academies Press. https://doi.org/10.17226/19012",
         stats: [
-          { targetVal: 5, prefix: "3 a ", suffix: " Años", label: "Demora Diagnóstica", desc: "Tiempo medio de peregrijane médico para ser escuchado y diagnosticado.", color: "amber" },
+          { targetVal: 5, prefix: "3 a ", suffix: " Años", label: "Demora Diagnóstica", desc: "Tiempo medio de peregrinaje médico para ser escuchado y diagnosticado.", color: "amber" },
           { targetVal: 84, prefix: "> ", suffix: "%", label: "Viven Sin Diagnóstico", desc: "Etiquetados erróneamente con ansiedad o depresión sin recibir ayuda médica real.", color: "red" },
           { targetVal: 9, prefix: "", suffix: " de 10", label: "Sin Formación Médica", desc: "Médicos de atención primaria no han recibido capacitación académica sobre EM/SFC.", color: "amber" }
         ]
@@ -1226,6 +1308,18 @@
       document.getElementById('focus-slide-modal').classList.remove('active');
     }
 
+    function openCinemaImageModal() {
+      const item = slidesData[currentIndex];
+      if (item.type === 'infographic') {
+        document.getElementById('cinema-modal-img').src = item.illustrationImg;
+        document.getElementById('cinema-image-modal').classList.add('active');
+      }
+    }
+
+    function closeCinemaImageModal() {
+      document.getElementById('cinema-image-modal').classList.remove('active');
+    }
+
     function replayCurrentClip() {
       hideFocusSlide();
       playFragment();
@@ -1294,6 +1388,7 @@
       const item = slidesData[currentIndex];
 
       hideFocusSlide();
+      closeCinemaImageModal();
       const banner = document.getElementById('overlay-banner');
       banner.classList.remove('fade-out-total');
 
@@ -1332,7 +1427,7 @@
 
         document.getElementById('main-play-btn').style.display = 'none';
 
-        // Update Infographic Visual Card & Generated Illustration
+        // Update Infographic Visual Card & Generated Protagonist Illustration
         document.getElementById('slide-tag').textContent = item.tag;
         document.getElementById('slide-title-text').textContent = item.headline;
         document.getElementById('slide-illustration-img').src = item.illustrationImg;
@@ -1361,8 +1456,10 @@
 
           div.innerHTML = `
             <div class="stat-number ${st.color}">${numHTML}</div>
-            <div class="stat-label">${st.label}</div>
-            <div class="stat-desc">${st.desc}</div>
+            <div class="stat-info-col">
+              <div class="stat-label">${st.label}</div>
+              <div class="stat-desc">${st.desc}</div>
+            </div>
           `;
           statsGrid.appendChild(div);
         });
@@ -1452,6 +1549,7 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         hideFocusSlide();
+        closeCinemaImageModal();
       }
       if (e.key === 'ArrowLeft') prevSlide();
       if (e.key === 'ArrowRight') nextSlide();
