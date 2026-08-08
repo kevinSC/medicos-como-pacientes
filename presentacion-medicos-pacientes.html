@@ -793,7 +793,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: justify;
     }
 
     .sidebar-close-btn:hover {
@@ -1059,7 +1059,6 @@
     </div>
   </div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     const slidesData = [
       // MOMENTOS DEL DOCUMENTAL (1 a 6) CON ENFASIS DE TEXTO ALTO IMPACTO Y CITAS APA 7ª ED.
@@ -1219,7 +1218,7 @@
         dialogueEN: "Advanced scientific studies demonstrate brainstem neuroinflammation, cerebral hypoperfusion (POTS/Orthostatic Intolerance), and immune dysfunction. It is NOT psychological!",
         apaCitation: "Grach, S. L., Seltzer, J., Chon, T. Y., & Ganesh, R. (2023). Diagnosis and management of myalgic encephalomyelitis/chronic fatigue syndrome. Mayo Clinic Proceedings, 98(10), 1548–1550. https://doi.org/10.1016/j.mayocp.2023.07.032",
         stats: [
-          { textDisplay: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta de flujo cerebral.", color: "cyan" },
+          { textDisplay: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta of flujo cerebral.", color: "cyan" },
           { textDisplay: "MCAS", label: "Activación Mastocitaria", desc: "Reacciones inmunes e inflamación descontrolada en múltiples órganos.", color: "cyan" },
           { textDisplay: "LDN", label: "Tratamiento Neuroinmune", desc: "Uso de Naltrexona a Dosis Bajas y Piridostigmina para reducir la neuroinflamación.", color: "green" }
         ]
@@ -1232,14 +1231,15 @@
     let checkIntervalTimer = null;
     let isPlayerReady = false;
 
-    function onYouTubeIframeAPIReady() {
+    // DEFINING ON YOUTUBE API READY BEFORE SCRIPT LOAD TO PREVENT RACE CONDITIONS
+    window.onYouTubeIframeAPIReady = function() {
       player = new YT.Player('youtube-player', {
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
         }
       });
-    }
+    };
 
     function onPlayerReady(event) {
       isPlayerReady = true;
@@ -1250,10 +1250,8 @@
     function onPlayerStateChange(event) {
       const banner = document.getElementById('overlay-banner');
       if (event.data === YT.PlayerState.PLAYING) {
-        banner.classList.add('fade-out-total');
+        if (banner) banner.classList.add('fade-out-total');
         hideFocusSlide();
-      } else if (event.data === YT.PlayerState.PAUSED) {
-        // When paused by auto-stop or user, show focus modal if at end
       }
     }
 
@@ -1333,7 +1331,6 @@
           try {
             player.seekTo(item.startSeconds, true);
             player.playVideo();
-            // Backup retry in case seekTo interrupted playVideo on Chrome
             setTimeout(() => {
               if (player && typeof player.playVideo === 'function') {
                 player.playVideo();
@@ -1516,5 +1513,7 @@
       }
     });
   </script>
+  <!-- YOUTUBE IFRAME API LOADED AFTER ONYOUTUBEIFRAMEAPIREADY IS DEFINED -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
