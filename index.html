@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Presentación con Ilustraciones Protagonistas</title>
+  <title>Doctors as Patients: Presentación con Lienzo e Infografía Orgánica</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@
       border: none;
     }
 
-    /* Visual Infographic Slide Frame - FULL VIEWPORT UTILIZATION */
+    /* Visual Infographic Slide Frame - IMMERSIVE FULL-VIEWPORT CANVAS */
     .slide-visual-frame {
       position: absolute;
       top: 0;
@@ -71,7 +71,7 @@
       width: 100vw;
       height: 100vh;
       z-index: 15;
-      background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+      background: #030712;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -87,26 +87,64 @@
       visibility: visible;
     }
 
-    /* Hero Card maximizing 98vw and 96vh space */
+    /* HERO CANVAS CONTAINER (98vw x 96vh) */
     .slide-card-hero {
+      position: relative;
       width: 98vw;
       height: 96vh;
-      background: rgba(15, 23, 42, 0.94);
       border: 2px solid var(--accent-cyan);
-      border-radius: 24px;
-      padding: 24px 32px;
-      box-shadow: 0 25px 90px rgba(0, 0, 0, 0.95), 0 0 70px rgba(6, 182, 212, 0.45);
+      border-radius: 28px;
+      padding: 32px 44px;
+      box-shadow: 0 25px 100px rgba(0, 0, 0, 0.98), 0 0 80px rgba(6, 182, 212, 0.5);
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      justify-content: space-between;
+      overflow: hidden;
       transform: translateY(20px) scale(0.99);
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .slide-visual-frame.active .slide-card-hero {
       transform: translateY(0) scale(1);
+    }
+
+    /* CANVAS BACKGROUND IMAGE & GRADIENT OVERLAY */
+    .slide-canvas-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.68) contrast(1.18);
+      z-index: 1;
+      transition: transform 1.2s ease;
+    }
+
+    .slide-card-hero:hover .slide-canvas-bg {
+      transform: scale(1.03);
+    }
+
+    .slide-canvas-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(3, 7, 18, 0.92) 0%, rgba(9, 13, 22, 0.65) 50%, rgba(3, 7, 18, 0.88) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* FLOATING CONTENT WRAPPER ON TOP OF CANVAS */
+    .slide-canvas-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      gap: 16px;
     }
 
     .slide-badge-row {
@@ -142,193 +180,132 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       animation: pulse-alarm 2.5s infinite;
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.5);
     }
 
     .slide-source {
       font-size: 0.95rem;
       color: var(--accent-amber);
       font-weight: 800;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(251, 191, 36, 0.4);
     }
 
     .slide-title-text {
       font-family: var(--font-title);
-      font-size: 2.6rem;
+      font-size: 2.8rem;
       font-weight: 900;
       line-height: 1.2;
       color: #ffffff;
       border-left: 8px solid var(--accent-cyan);
-      padding-left: 20px;
-      text-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+      padding-left: 22px;
+      text-shadow: 0 0 35px rgba(6, 182, 212, 0.8), 0 4px 20px rgba(0,0,0,0.9);
     }
 
-    /* EQUAL 50/50 SPLIT SCREEN LAYOUT WITH PROTAGONIST ILLUSTRATION */
-    .slide-content-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      align-items: stretch;
-      flex: 1;
-      min-height: 0; /* Prevents overflow */
-    }
-
-    @media (max-width: 1100px) {
-      .slide-content-split {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* PROTAGONIST ILLUSTRATION CONTAINER - 50% WIDTH & 100% HEIGHT */
-    .slide-illustration-box {
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 3px solid var(--accent-cyan);
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(6, 182, 212, 0.4);
-      position: relative;
-      cursor: pointer;
-    }
-
-    .slide-illustration-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .slide-illustration-box:hover img {
-      transform: scale(1.06);
-    }
-
-    .image-zoom-badge {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      background: rgba(9, 13, 22, 0.85);
-      border: 1px solid var(--accent-cyan);
-      color: var(--accent-cyan);
-      padding: 8px 16px;
-      border-radius: 14px;
-      font-size: 0.85rem;
-      font-weight: 800;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .right-content-pane {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      justify-content: space-between;
-      height: 100%;
-    }
-
+    /* FLOATING ORGANIC GLASS CARDS GRID */
     .slide-stats-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      flex: 1;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      margin: 8px 0;
     }
 
-    /* Staggered Card Animation */
+    /* Staggered Floating Entrance Animation */
     @keyframes fadeInUpStagger {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
     .stat-box {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 18px;
-      padding: 18px 22px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(6, 182, 212, 0.35);
+      border-radius: 22px;
+      padding: 24px 28px;
       display: flex;
-      align-items: center;
-      gap: 20px;
+      flex-direction: column;
+      gap: 12px;
       position: relative;
       overflow: hidden;
-      transition: all 0.3s ease;
-      animation: fadeInUpStagger 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.2);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: fadeInUpStagger 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .stat-box:hover {
-      background: rgba(255, 255, 255, 0.09);
+      background: rgba(15, 23, 42, 0.88);
       border-color: var(--accent-cyan);
-      transform: translateX(6px);
-      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 25px 60px rgba(6, 182, 212, 0.4);
     }
 
     /* Animated Stat Number */
     .stat-number {
       font-family: var(--font-title);
-      font-size: 3.2rem;
+      font-size: 3.6rem;
       font-weight: 900;
       color: var(--accent-cyan);
       line-height: 1;
-      min-width: 140px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
     }
 
     .stat-number.red {
       color: var(--accent-red);
-      text-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
+      text-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
     }
 
     .stat-number.amber {
       color: var(--accent-amber);
-      text-shadow: 0 0 25px rgba(251, 191, 36, 0.7);
+      text-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
     }
 
     .stat-number.cyan {
       color: var(--accent-cyan);
-      text-shadow: 0 0 25px rgba(6, 182, 212, 0.7);
+      text-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
     }
 
     .stat-number.green {
       color: var(--accent-green);
-      text-shadow: 0 0 25px rgba(16, 185, 129, 0.7);
-    }
-
-    .stat-info-col {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
+      text-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
     }
 
     .stat-label {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: #f8fafc;
       line-height: 1.3;
     }
 
     .stat-desc {
-      font-size: 0.925rem;
+      font-size: 0.98rem;
       color: #cbd5e1;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
-    /* APA Citation Box inside Card Footer */
+    /* FLOATING GLASS APA CITATION FOOTER */
     .apa-card-footer {
-      background: rgba(6, 182, 212, 0.1);
-      border: 1px solid rgba(6, 182, 212, 0.3);
-      border-radius: 14px;
-      padding: 12px 18px;
-      font-size: 0.875rem;
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      border-radius: 18px;
+      padding: 14px 24px;
+      font-size: 0.9rem;
       color: #cbd5e1;
-      line-height: 1.4;
+      line-height: 1.45;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
 
     .apa-card-footer strong {
@@ -342,7 +319,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 4px;
+      margin-top: 6px;
       position: relative;
     }
 
@@ -379,9 +356,9 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -402,7 +379,7 @@
       max-height: 90vh;
       border-radius: 20px;
       border: 3px solid var(--accent-cyan);
-      box-shadow: 0 0 80px rgba(6, 182, 212, 0.6);
+      box-shadow: 0 0 90px rgba(6, 182, 212, 0.7);
     }
 
     .cinema-close-btn {
@@ -928,45 +905,48 @@
       <iframe id="youtube-player" src="https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?enablejsapi=1&rel=0&start=23&cc_load_policy=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <!-- Visual Infographic Slide Frame (Moments 7-11) - MAXIMIZED PROTAGONIST LAYOUT -->
+    <!-- Visual Infographic Slide Frame (Moments 7-11) - HERO IMAGE CANVAS LAYOUT -->
     <div class="slide-visual-frame" id="slide-visual-frame">
-      <div class="slide-card-hero">
-        <div class="slide-badge-row">
-          <span class="slide-tag" id="slide-tag">🚨 DATO ALARMANTE 1</span>
-          <span class="slide-source" id="slide-source">Fuente: Mayo Clinic Proceedings (2023) & Bateman Horne Center (2025)</span>
-        </div>
+      <div class="slide-card-hero" onclick="openCinemaImageModal()">
+        <!-- Background Canvas Image -->
+        <img id="slide-canvas-bg" class="slide-canvas-bg" src="images/moment_7.jpg" alt="Lienzo Médico">
+        
+        <!-- Dark Atmospheric Gradient Overlay -->
+        <div class="slide-canvas-overlay"></div>
 
-        <h2 class="slide-title-text" id="slide-title-text">
-          La Epidemia Silenciosa: Incapacidad Severa y Confinamiento
-        </h2>
-
-        <!-- Creative Interactive Gauge Bar for PEM / Energy -->
-        <div id="gauge-wrapper" style="display:none; flex-direction:column; gap:4px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:800; color:var(--accent-red);">
-            <span>⚡ Nivel de Energía Mitocondrial (Post-Esfuerzo Mínimo)</span>
-            <span id="gauge-percent-text">100% ➔ 15% (COLAPSO METABÓLICO)</span>
-          </div>
-          <div class="energy-gauge-container">
-            <div class="energy-gauge-bar"></div>
-          </div>
-        </div>
-
-        <!-- 50/50 Split Content Layout with Protagonist Illustration Image -->
-        <div class="slide-content-split">
-          <div class="slide-illustration-box" onclick="openCinemaImageModal()">
-            <img id="slide-illustration-img" src="images/moment_7.jpg" alt="Ilustración Médica Protagonista">
-            <div class="image-zoom-badge">🔍 Ampliar Imagen</div>
-          </div>
-          
-          <div class="right-content-pane">
-            <div class="slide-stats-grid" id="slide-stats-grid">
-              <!-- Dynamic animated stats injected here -->
+        <!-- Floating Organic Content Layer -->
+        <div class="slide-canvas-content" onclick="event.stopPropagation()">
+          <div class="slide-badge-row">
+            <span class="slide-tag" id="slide-tag">🚨 DATO ALARMANTE 1</span>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <button style="background:rgba(6,182,212,0.25); border:1px solid var(--accent-cyan); color:var(--accent-cyan); padding:6px 14px; border-radius:12px; font-weight:800; font-size:0.8rem; cursor:pointer;" onclick="openCinemaImageModal()">🔍 Ampliar Lienzo</button>
+              <span class="slide-source" id="slide-source">Fuente: Mayo Clinic Proceedings (2023) & Bateman Horne Center (2025)</span>
             </div>
+          </div>
 
-            <!-- APA Citation Box at Slide Card Footer -->
-            <div class="apa-card-footer" id="apa-card-footer">
-              <strong>Cita APA (7ª ed.):</strong> <span id="slide-apa-text">Hoppers, M., Yellman, B., & Bateman, L. (2025). Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs). Bateman Horne Center.</span>
+          <h2 class="slide-title-text" id="slide-title-text">
+            La Epidemia Silenciosa: Incapacidad Severa y Confinamiento
+          </h2>
+
+          <!-- Creative Interactive Gauge Bar for PEM / Energy -->
+          <div id="gauge-wrapper" style="display:none; flex-direction:column; gap:4px; background:rgba(15,23,42,0.75); backdrop-filter:blur(14px); padding:10px 16px; border-radius:14px; border:1px solid rgba(239,68,68,0.4);">
+            <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:800; color:var(--accent-red);">
+              <span>⚡ Nivel de Energía Mitocondrial (Post-Esfuerzo Mínimo)</span>
+              <span id="gauge-percent-text">100% ➔ 15% (COLAPSO METABÓLICO)</span>
             </div>
+            <div class="energy-gauge-container">
+              <div class="energy-gauge-bar"></div>
+            </div>
+          </div>
+
+          <!-- Floating Organic Glassmorphism Stat Cards Grid -->
+          <div class="slide-stats-grid" id="slide-stats-grid">
+            <!-- Dynamic animated stats injected here -->
+          </div>
+
+          <!-- Floating Glass APA Citation Box at Slide Card Footer -->
+          <div class="apa-card-footer" id="apa-card-footer">
+            <strong>Cita APA (7ª ed.):</strong> <span id="slide-apa-text">Hoppers, M., Yellman, B., & Bateman, L. (2025). Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs). Bateman Horne Center.</span>
           </div>
         </div>
       </div>
@@ -974,8 +954,8 @@
 
     <!-- FULLSCREEN CINEMA IMAGE MODAL -->
     <div class="cinema-image-modal" id="cinema-image-modal" onclick="closeCinemaImageModal()">
-      <button class="cinema-close-btn" onclick="closeCinemaImageModal()">✕ Cerrar Vista Cine</button>
-      <img id="cinema-modal-img" src="images/moment_7.jpg" alt="Ilustración Médica a Pantalla Completa">
+      <button class="cinema-close-btn" onclick="closeCinemaImageModal()">✕ Cerrar Vista Lienzo</button>
+      <img id="cinema-modal-img" src="images/moment_7.jpg" alt="Lienzo Médico a Pantalla Completa">
     </div>
 
     <!-- Video Blur Backdrop -->
@@ -1143,7 +1123,7 @@
         apaCitation: "Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients [Documental; Testimonio de Escucha]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w?t=3179"
       },
 
-      // SECCIÓN INFOGRÁFICA CON ILUSTRACIONES PROTAGONISTAS AL 50% Y CITAS APA 7ª ED. (Momento 7 a 11)
+      // SECCIÓN INFOGRÁFICA DE IMPACTO ALARMANTE CON LIENZO E INFORMACIÓN FLOTANTE (Momento 7 a 11)
       {
         id: 7,
         type: 'infographic',
@@ -1412,7 +1392,7 @@
           player.seekTo(item.startSeconds, true);
         }
       } else {
-        // INFOGRAPHIC SLIDE MODE (Moments 7-11)
+        // INFOGRAPHIC SLIDE MODE (Moments 7-11) - HERO IMAGE CANVAS
         if (isPlayerReady && player && typeof player.pauseVideo === 'function') {
           player.pauseVideo();
         }
@@ -1427,10 +1407,10 @@
 
         document.getElementById('main-play-btn').style.display = 'none';
 
-        // Update Infographic Visual Card & Generated Protagonist Illustration
+        // Update Background Canvas Image & Floating Content
         document.getElementById('slide-tag').textContent = item.tag;
         document.getElementById('slide-title-text').textContent = item.headline;
-        document.getElementById('slide-illustration-img').src = item.illustrationImg;
+        document.getElementById('slide-canvas-bg').src = item.illustrationImg;
         
         // Show energy gauge bar for PEM (Moment 10)
         const gaugeWrapper = document.getElementById('gauge-wrapper');
@@ -1456,10 +1436,8 @@
 
           div.innerHTML = `
             <div class="stat-number ${st.color}">${numHTML}</div>
-            <div class="stat-info-col">
-              <div class="stat-label">${st.label}</div>
-              <div class="stat-desc">${st.desc}</div>
-            </div>
+            <div class="stat-label">${st.label}</div>
+            <div class="stat-desc">${st.desc}</div>
           `;
           statsGrid.appendChild(div);
         });
