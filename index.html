@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Presentación con Lienzo e Infografía Orgánica</title>
+  <title>Doctors as Patients: Presentación con Énfasis de Texto de Alto Impacto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
       --accent-purple: #8b5cf6;
       --text-white: #ffffff;
       --text-gray: #94a3b8;
-      --glass-bg: rgba(9, 13, 22, 0.94);
+      --glass-bg: rgba(9, 13, 22, 0.95);
       --font-title: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
     }
@@ -403,9 +403,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       z-index: 60;
       opacity: 0;
       visibility: hidden;
@@ -422,17 +422,17 @@
       position: absolute;
       top: 24px;
       left: 24px;
-      max-width: 680px;
+      max-width: 720px;
       background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 18px;
-      padding: 18px 22px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(6, 182, 212, 0.35);
+      border-radius: 20px;
+      padding: 20px 26px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(6, 182, 212, 0.2);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       z-index: 50;
       opacity: 1;
       visibility: visible;
@@ -458,43 +458,45 @@
       background: rgba(6, 182, 212, 0.25);
       border: 1px solid var(--accent-cyan);
       color: var(--accent-cyan);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 800;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 12px;
       text-transform: uppercase;
     }
 
     .banner-speaker {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--accent-amber);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .banner-headline {
       font-family: var(--font-title);
-      font-size: 1.35rem;
-      font-weight: 800;
+      font-size: 1.45rem;
+      font-weight: 900;
       line-height: 1.3;
       color: var(--text-white);
+      text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
     }
 
     .banner-dialogue {
-      font-size: 0.9rem;
+      font-size: 1.05rem;
       line-height: 1.55;
-      color: #cbd5e1;
-      border-left: 4px solid var(--accent-cyan);
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 6px;
-      padding: 8px 12px;
+      color: #f1f5f9;
+      border-left: 5px solid var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 10px 14px;
     }
 
     .banner-dialogue strong {
       color: var(--accent-cyan);
+      font-weight: 800;
     }
 
     .banner-apa-box {
-      font-size: 0.775rem;
+      font-size: 0.8rem;
       color: #94a3b8;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -541,15 +543,15 @@
       background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
       color: #fff;
       border: none;
-      padding: 9px 18px;
-      border-radius: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4);
+      box-shadow: 0 4px 18px rgba(6, 182, 212, 0.5);
       transition: transform 0.2s ease;
     }
 
@@ -557,32 +559,46 @@
       transform: scale(1.04);
     }
 
-    /* MASSIVE PROJECTION CENTER FOCUS SLIDE MODAL */
+    /* MASSIVE PROJECTION CENTER FOCUS SLIDE MODAL - HIGH EMPHASIS DRAMATIC POP */
+    @keyframes modalFocusPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -40%) scale(0.85);
+      }
+      60% {
+        transform: translate(-50%, -52%) scale(1.03);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
     .focus-slide-modal {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -45%) scale(0.95);
-      width: 92vw;
-      max-width: 1250px;
-      background: rgba(10, 15, 26, 0.96);
-      border: 3px solid var(--accent-cyan);
-      border-radius: 32px;
-      padding: 44px 52px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 60px rgba(6, 182, 212, 0.6);
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 94vw;
+      max-width: 1350px;
+      background: rgba(7, 12, 22, 0.97);
+      border: 3.5px solid var(--accent-cyan);
+      border-radius: 36px;
+      padding: 48px 60px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.98), 0 0 90px rgba(6, 182, 212, 0.7);
       z-index: 70;
       opacity: 0;
       visibility: hidden;
       transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
     }
 
     .focus-slide-modal.active {
       opacity: 1;
       visibility: visible;
-      transform: translate(-50%, -50%) scale(1);
+      animation: modalFocusPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .focus-badge {
@@ -591,55 +607,58 @@
       gap: 10px;
       background: linear-gradient(135deg, var(--accent-amber), #f59e0b);
       color: #000;
-      padding: 8px 20px;
+      padding: 10px 24px;
       border-radius: 24px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       align-self: flex-start;
-      box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
     }
 
+    /* MASSIVE HIGH-EMPHASIS HEADLINE FOR PROJECTIONS */
     .focus-headline {
       font-family: var(--font-title);
-      font-size: 2.6rem;
+      font-size: 3.4rem;
       font-weight: 900;
-      line-height: 1.25;
+      line-height: 1.2;
       color: #ffffff;
-      text-shadow: 0 0 30px rgba(6, 182, 212, 0.9), 0 0 60px rgba(6, 182, 212, 0.5);
-      border-left: 8px solid var(--accent-cyan);
-      padding-left: 24px;
+      text-shadow: 0 0 40px rgba(6, 182, 212, 0.95), 0 0 80px rgba(6, 182, 212, 0.6);
+      border-left: 10px solid var(--accent-cyan);
+      padding-left: 28px;
     }
 
     .focus-speaker {
-      font-size: 1.3rem;
+      font-size: 1.45rem;
       color: var(--accent-amber);
       font-weight: 800;
       letter-spacing: 0.02em;
     }
 
+    /* HIGH EMPHASIS DIALOGUE QUOTE BOX */
     .focus-dialogue {
-      background: rgba(6, 182, 212, 0.12);
-      border: 2px solid rgba(6, 182, 212, 0.35);
-      padding: 20px 24px;
-      border-radius: 18px;
-      font-size: 1.25rem;
-      line-height: 1.6;
-      color: #f8fafc;
+      background: rgba(6, 182, 212, 0.14);
+      border: 2.5px solid rgba(6, 182, 212, 0.45);
+      padding: 24px 30px;
+      border-radius: 22px;
+      font-size: 1.5rem;
+      line-height: 1.65;
+      color: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .focus-dialogue strong {
       color: var(--accent-cyan);
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .focus-apa-citation {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 0.875rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-size: 0.95rem;
       color: #cbd5e1;
       line-height: 1.45;
     }
@@ -1043,7 +1062,7 @@
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     const slidesData = [
-      // MOMENTOS DEL DOCUMENTAL (1 a 6) CON CITAS APA 7ª ED.
+      // MOMENTOS DEL DOCUMENTAL (1 a 6) CON ENFASIS DE TEXTO ALTO IMPACTO Y CITAS APA 7ª ED.
       {
         id: 1,
         type: 'video',
@@ -1052,9 +1071,9 @@
         startSeconds: 23,
         endSeconds: 90,
         headline: "“Cuando más aprendí fue cuando me ascendieron a paciente”",
-        speaker: "— Jolien Plantinga & Gitte Boumeester",
-        dialogueES: "Era residente de psiquiatría hasta mi infección por covid. Me faltaba un año para convertirme en psiquiatra. Pero ahora estoy incapacitada al 100% para trabajar.",
-        dialogueEN: "I was a psychiatry resident until my COVID infection. I had another year to become a psychiatrist. But now I am 100% unfit for work.",
+        speaker: "— Jolien Plantinga & Gitte Boumeester (Médicos Generales)",
+        dialogueES: "Era residente de psiquiatría hasta mi infección por covid... Me faltaba solo un año para ser psiquiatra. Pero ahora estoy incapacitada al 100% para trabajar.",
+        dialogueEN: "I was a psychiatry resident until my COVID infection... I had another year to become a psychiatrist. But now I am 100% unfit for work.",
         apaCitation: "Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients: The Unseen Struggle of Long COVID & ME/CFS [Documental]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w"
       },
       {
@@ -1066,7 +1085,7 @@
         endSeconds: 370,
         headline: "“Mi única actividad del día es bajar de la cama de arriba a la cama de abajo”",
         speaker: "— Jolien Plantinga & Peter Hulshof",
-        dialogueES: "¿Cómo es su día ahora como paciente? Mi día es ir de mi cama de arriba a la cama de abajo. Esa es en realidad mi única actividad del día.",
+        dialogueES: "¿Cómo es su día a día ahora como paciente? Mi día es ir de mi cama de arriba a la cama de abajo. Esa es en realidad mi única actividad del día.",
         dialogueEN: "What is your day like now as a patient? My day is going from my bed upstairs to the bed downstairs. That is actually my only activity of the day.",
         apaCitation: "Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients [Documental; Módulo Severidad]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w?t=268"
       },
@@ -1077,10 +1096,10 @@
         endTimeStr: "14:30",
         startSeconds: 751,
         endSeconds: 870,
-        headline: "“Yo misma como médico tenía prejuicios... no quería ser ese tipo de paciente”",
+        headline: "“Yo misma como médico tenía prejuicios... pensaba que se inventaban la enfermedad”",
         speaker: "— Jolien Plantinga (Médico General)",
-        dialogueES: "Tenía los prejuicios que tienen muchos médicos... pensaba que los pacientes de fatiga crónica se inventaban la enfermedad. Hasta que vi a enfermos graves encamados en cuartos oscuros.",
-        dialogueEN: "I had the prejudices that many doctors have... I thought chronic fatigue patients were making it up. Until I experienced it and saw severely ill patients bedridden in dark rooms.",
+        dialogueES: "Tenía los prejuicios que tienen muchos médicos... pensaba que los pacientes de fatiga crónica se inventaban la enfermedad. Hasta que lo viví en carne propia y vi a enfermos graves encamados en cuartos oscuros.",
+        dialogueEN: "I had the prejudices that many doctors have... I thought chronic fatigue patients were making it up. Until I experienced it myself and saw severely ill patients bedridden in dark rooms.",
         apaCitation: "Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients [Documental; Sesgo Médico]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w?t=751"
       },
       {
@@ -1103,7 +1122,7 @@
         endTimeStr: "42:00",
         startSeconds: 2461,
         endSeconds: 2520,
-        headline: "“Siempre me enorgullecí de ser médico, pero ver miles de enfermos ignorados me da vergüenza”",
+        headline: "“Siempre me enorgullecí de ser médico... ver miles de enfermos abandonados me da vergüenza”",
         speaker: "— Gitte Boumeester & Laura",
         dialogueES: "Siempre me enorgullecí de ser médico. Pensaba que los médicos hacían todo lo posible. Pero ahora veo a miles de personas enfermas en sus casas, abandonadas, y me da una profunda vergüenza.",
         dialogueEN: "I was always proud to be a doctor. I thought doctors did everything possible. But now I see thousands of sick people in their homes, abandoned, and it fills me with shame.",
@@ -1272,7 +1291,11 @@
       document.getElementById('modal-apa-text').textContent = item.apaCitation;
 
       document.getElementById('focus-backdrop').classList.add('active');
-      document.getElementById('focus-slide-modal').classList.add('active');
+      
+      const modal = document.getElementById('focus-slide-modal');
+      modal.classList.remove('active');
+      void modal.offsetWidth; // Trigger reflow to restart animation
+      modal.classList.add('active');
 
       if (item.type === 'infographic') {
         document.getElementById('replay-btn').style.display = 'none';
