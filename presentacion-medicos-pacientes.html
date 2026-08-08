@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Modo Proyección & Infografía Médica</title>
+  <title>Doctors as Patients: Presentación e Infografía de Impacto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -45,10 +45,16 @@
       background: #000;
     }
 
+    /* Video Frame Container */
     .video-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: none;
+      z-index: 10;
+      transition: opacity 0.5s ease;
     }
 
     .video-frame iframe {
@@ -57,7 +63,126 @@
       border: none;
     }
 
-    /* Blur Backdrop on Auto-Stop Focus Mode & Infographic */
+    /* Infographic Slide Visual Frame (For Moments 7-11) */
+    .slide-visual-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 15;
+      background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .slide-visual-frame.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .slide-card-hero {
+      width: 90vw;
+      max-width: 1280px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid var(--accent-cyan);
+      border-radius: 28px;
+      padding: 44px 52px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(6, 182, 212, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .slide-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slide-tag {
+      background: linear-gradient(135deg, var(--accent-red), #dc2626);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 900;
+      padding: 6px 18px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .slide-source {
+      font-size: 0.9rem;
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    .slide-title-text {
+      font-family: var(--font-title);
+      font-size: 2.6rem;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #ffffff;
+      border-left: 8px solid var(--accent-cyan);
+      padding-left: 20px;
+    }
+
+    .slide-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-number {
+      font-family: var(--font-title);
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--accent-cyan);
+      line-height: 1;
+    }
+
+    .stat-number.red {
+      color: var(--accent-red);
+    }
+
+    .stat-number.amber {
+      color: var(--accent-amber);
+    }
+
+    .stat-label {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.35;
+    }
+
+    .stat-desc {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* Blur Backdrop for Auto-Stop Focus Mode */
     .focus-backdrop {
       position: absolute;
       top: 0;
@@ -204,22 +329,7 @@
       transform: scale(1.04);
     }
 
-    .infographic-trigger-btn {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
-    }
-
-    /* MASSIVE PROJECTION FOCUS SLIDE MODAL */
+    /* MASSIVE PROJECTION CENTER FOCUS SLIDE MODAL */
     .focus-slide-modal {
       position: absolute;
       top: 50%;
@@ -334,205 +444,6 @@
       box-shadow: 0 6px 30px rgba(6, 182, 212, 0.6);
     }
 
-    /* SCIENTIFIC INFOGRAPHIC MODAL */
-    .infographic-modal {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.95);
-      width: 94vw;
-      max-width: 1350px;
-      max-height: 92vh;
-      background: rgba(8, 12, 22, 0.97);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 2px solid rgba(139, 92, 246, 0.6);
-      border-radius: 28px;
-      padding: 36px 44px;
-      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.95), 0 0 80px rgba(139, 92, 246, 0.4);
-      z-index: 80;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      overflow-y: auto;
-    }
-
-    .infographic-modal.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .info-modal-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.12);
-      padding-bottom: 20px;
-    }
-
-    .info-modal-title-box {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .info-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      color: #fff;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      align-self: flex-start;
-    }
-
-    .info-title {
-      font-family: var(--font-title);
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.2;
-    }
-
-    .info-subtitle {
-      font-size: 1rem;
-      color: var(--accent-cyan);
-      font-weight: 600;
-    }
-
-    .info-close-btn {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
-    }
-
-    .info-close-btn:hover {
-      background: rgba(239, 68, 68, 0.8);
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: 22px;
-    }
-
-    .info-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    }
-
-    .info-card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-    }
-
-    .info-card-icon {
-      font-size: 1.6rem;
-      background: rgba(6, 182, 212, 0.15);
-      border: 1px solid var(--accent-cyan);
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .info-card-title {
-      font-family: var(--font-title);
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .info-card-body {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #cbd5e1;
-    }
-
-    .info-card-body ul {
-      margin-left: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .info-card-body strong {
-      color: var(--accent-cyan);
-    }
-
-    .tag-red {
-      color: var(--accent-red);
-      font-weight: 800;
-    }
-
-    .tag-green {
-      color: var(--accent-green);
-      font-weight: 800;
-    }
-
-    .info-citations-box {
-      background: rgba(6, 182, 212, 0.06);
-      border: 1px solid rgba(6, 182, 212, 0.25);
-      border-radius: 18px;
-      padding: 20px 24px;
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .citations-header {
-      font-family: var(--font-title);
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--accent-amber);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .citations-list {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .citations-list li {
-      margin-left: 18px;
-    }
-
     /* LEFT SIDEBAR TRIGGER ZONE */
     .sidebar-trigger-zone {
       position: absolute;
@@ -569,7 +480,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 370px;
+      width: 380px;
       height: 100vh;
       background: rgba(7, 10, 18, 0.96);
       backdrop-filter: blur(24px);
@@ -660,6 +571,16 @@
       box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
     }
 
+    .sidebar-moment-item.is-infographic {
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .sidebar-moment-item.is-infographic.active {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+      border-color: #ec4899;
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+    }
+
     .item-top-row {
       display: flex;
       align-items: center;
@@ -675,9 +596,19 @@
       border-radius: 8px;
     }
 
+    .item-id-badge.info-badge-tag {
+      color: #ec4899;
+      background: rgba(236, 72, 153, 0.2);
+    }
+
     .sidebar-moment-item.active .item-id-badge {
       background: var(--accent-cyan);
       color: #000;
+    }
+
+    .sidebar-moment-item.active .item-id-badge.info-badge-tag {
+      background: #ec4899;
+      color: #fff;
     }
 
     .item-time {
@@ -700,31 +631,9 @@
 
     .sidebar-footer-controls {
       display: flex;
-      flex-direction: column;
       gap: 10px;
       padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .side-infographic-btn {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      color: #fff;
-      border: none;
-      padding: 12px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .nav-btns-row {
-      display: flex;
-      gap: 10px;
     }
 
     .sidebar-nav-btn {
@@ -749,8 +658,25 @@
 <body>
 
   <div class="viewport">
-    <div class="video-frame">
+    <!-- Video Player Frame (Moments 1-6) -->
+    <div class="video-frame" id="video-frame">
       <iframe id="youtube-player" src="https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?enablejsapi=1&rel=0&start=23&cc_load_policy=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Visual Infographic Slide Frame (Moments 7-11) -->
+    <div class="slide-visual-frame" id="slide-visual-frame">
+      <div class="slide-card-hero">
+        <div class="slide-badge-row">
+          <span class="slide-tag" id="slide-tag">🚨 DATO ALARMANTE 1</span>
+          <span class="slide-source" id="slide-source">Fuente: Mayo Clinic Proceedings (2023) & Bateman Horne Center (2025)</span>
+        </div>
+        <h2 class="slide-title-text" id="slide-title-text">
+          La Epidemia Silenciosa: Incapacidad Severa y Confinamiento
+        </h2>
+        <div class="slide-stats-grid" id="slide-stats-grid">
+          <!-- Dynamic stats injected here -->
+        </div>
+      </div>
     </div>
 
     <!-- Video Blur Backdrop -->
@@ -765,7 +691,7 @@
     <aside class="left-sidebar" id="left-sidebar">
       <div class="sidebar-header">
         <div class="sidebar-title">
-          🎬 Momentos Clave
+          🎬 Índice de la Presentación
         </div>
         <button class="sidebar-close-btn" onclick="toggleSidebar(false)">✕</button>
       </div>
@@ -775,20 +701,15 @@
       </div>
 
       <div class="sidebar-footer-controls">
-        <button class="side-infographic-btn" onclick="toggleInfographic(true)">
-          📊 Infografía Médica 2025
-        </button>
-        <div class="nav-btns-row">
-          <button id="side-prev-btn" class="sidebar-nav-btn" onclick="prevSlide()">‹ Anterior</button>
-          <button id="side-next-btn" class="sidebar-nav-btn" onclick="nextSlide()">Siguiente ›</button>
-        </div>
+        <button id="side-prev-btn" class="sidebar-nav-btn" onclick="prevSlide()">‹ Anterior</button>
+        <button id="side-next-btn" class="sidebar-nav-btn" onclick="nextSlide()">Siguiente ›</button>
       </div>
     </aside>
 
     <!-- Top-Left Overlay Banner -->
     <div class="top-overlay-banner" id="overlay-banner">
       <div class="banner-header">
-        <span class="banner-tag" id="banner-tag">Momento 1 / 6</span>
+        <span class="banner-tag" id="banner-tag">Momento 1 / 11</span>
         <span class="banner-speaker" id="banner-speaker">— Jolien Plantinga (Médico General)</span>
       </div>
 
@@ -806,10 +727,6 @@
           <button id="lang-en-btn" class="lang-btn" onclick="setLang('en')">EN 🇬🇧</button>
         </div>
 
-        <button class="infographic-trigger-btn" onclick="toggleInfographic(true)">
-          📊 Evidencia 2025
-        </button>
-
         <button id="main-play-btn" class="play-btn" onclick="playFragment()">
           ▶ Reproducir (<span id="start-time">00:23</span> - <span id="end-time">01:30</span>)
         </button>
@@ -818,7 +735,7 @@
 
     <!-- MASSIVE PROJECTION CENTER FOCUS SLIDE MODAL -->
     <div class="focus-slide-modal" id="focus-slide-modal">
-      <span class="focus-badge">✨ CITA CLAVE DEL MOMENTO <span id="focus-moment-id">1</span></span>
+      <span class="focus-badge" id="focus-badge">✨ CITA CLAVE DEL MOMENTO <span id="focus-moment-id">1</span></span>
       <h2 class="focus-headline" id="focus-headline">
         “Cuando más aprendí fue cuando me ascendieron a paciente”
       </h2>
@@ -827,102 +744,12 @@
         <strong>Diálogo Destacado:</strong> "Era residente de psiquiatría hasta mi infección por covid. Me faltaba un año para convertirme en psiquiatra. Pero ahora estoy incapacitada al 100% para trabajar."
       </div>
       <div class="focus-actions">
-        <button class="replay-btn" onclick="replayCurrentClip()">
+        <button class="replay-btn" id="replay-btn" onclick="replayCurrentClip()">
           ↺ Repetir Fragmento
         </button>
         <button class="next-moment-btn" onclick="goToNextMoment()">
-          Siguiente Momento ➔
+          Siguiente Diapositiva ➔
         </button>
-      </div>
-    </div>
-
-    <!-- SCIENTIFIC INFOGRAPHIC MODAL -->
-    <div class="infographic-modal" id="infographic-modal">
-      <div class="info-modal-header">
-        <div class="info-modal-title-box">
-          <span class="info-badge">📊 ANÁLISIS DE LOS 6 DOCUMENTOS DE INVESTIGACIÓN CLÍNICA (2023 - 2025)</span>
-          <h2 class="info-title">Encefalomielitis Miálgica (EM/SFC) & Long COVID (IACCs)</h2>
-          <p class="info-subtitle">Síntesis exhaustiva de los 6 compendios clínicos (Mayo Clinic Proceedings 2023 & Bateman Horne Center Clinical Care Guide 2025 - Ediciones ES/EN)</p>
-        </div>
-        <button class="info-close-btn" onclick="toggleInfographic(false)">✕</button>
-      </div>
-
-      <div class="info-grid">
-        <!-- Card 1: Diagnostic Triad -->
-        <div class="info-card">
-          <div class="info-card-header">
-            <div class="info-card-icon">🩺</div>
-            <h3 class="info-card-title">Criterios Diagnósticos IOM/NAM (2015) & CDC</h3>
-          </div>
-          <div class="info-card-body">
-            <p style="margin-bottom:10px;">Para diagnosticar <strong>EM/SFC</strong> o <strong>Long COVID complejo</strong>, se requiere la presencia obligatoria de los siguientes 3 síntomas (gravedad moderada a severa >50% del tiempo durante más de 6 meses):</p>
-            <ul>
-              <li><strong>Fatiga Profunda e Incapacitante:</strong> No aliviada por el descanso y acompañada de una drástica reducción en la capacidad funcional previa.</li>
-              <li><strong>Malestar Pospesfuerzo (PEM):</strong> Empeoramiento fisiológico agudo tras esfuerzos mínimos.</li>
-              <li><strong>Sueño No Reparador:</strong> Disfunción severa de la arquitectura del sueño y ritmos circadianos.</li>
-            </ul>
-            <p style="margin-top:10px;"><em>+ Al menos 1 síntoma obligatorio adicional: Deterioro Cognitivo ("Niebla Mental") o Intolerancia Ortostática (POTS).</em></p>
-          </div>
-        </div>
-
-        <!-- Card 2: PEM Pathophysiology -->
-        <div class="info-card">
-          <div class="info-card-header">
-            <div class="info-card-icon">⚡</div>
-            <h3 class="info-card-title">Fisiopatología del PEM (Post-Exertional Malaise)</h3>
-          </div>
-          <div class="info-card-body">
-            <p style="margin-bottom:10px;">El PEM es el <strong>síntoma patognomónico</strong> que diferencia a las afecciones postinfecciosas del desacondicionamiento común:</p>
-            <ul>
-              <li><strong>Respuesta Fisiológica Retrasada:</strong> El colapso bioenergético mitocondrial suele ocurrir <strong>24 a 48 horas después</strong> de la actividad desencadenante.</li>
-              <li><strong>Triggers Físicos, Cognitivos o Emocionales:</strong> Tareas simples (como ducharse, leer o conversar) pueden desencadenar un choque (*crash*).</li>
-              <li><strong>Duración Prolongada:</strong> El choque dura días, semanas o puede resultar en pérdidas funcionales permanentes.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Card 3: Pacing vs GET -->
-        <div class="info-card">
-          <div class="info-card-header">
-            <div class="info-card-icon">🛑</div>
-            <h3 class="info-card-title">Manejo de Energía: PACING vs. GET</h3>
-          </div>
-          <div class="info-card-body">
-            <p style="margin-bottom:10px;">Estrategias de intervención en la actividad clínica:</p>
-            <ul>
-              <li><span class="tag-red">❌ GET (Terapia de Ejercicio Gradual):</span> <strong>CONTRAINDICADA</strong> por el CDC, NICE (2021) y Bateman Horne (2025). Desencadena PEM y produce daño físico grave.</li>
-              <li><span class="tag-green">✅ PACING (Gestión Energética):</span> La estrategia dorada. Consiste en operar estrictamente dentro del <em>"Sobre Energético" (Energy Envelope)</em> para prevenir recaídas y promover la estabilización biológica.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Card 4: Clinical Therapeutics -->
-        <div class="info-card">
-          <div class="info-card-header">
-            <div class="info-card-icon">💊</div>
-            <h3 class="info-card-title">Tratamientos Sintomáticos Destacados</h3>
-          </div>
-          <div class="info-card-body">
-            <ul>
-              <li><strong>Neuroinflamación y Dolor:</strong> Naltrexona a Dosis Bajas (LDN), Piridostigmina, Dextrometorfano.</li>
-              <li><strong>Disfunción Autonómica e Intolerancia Ortostática (POTS):</strong> Cargas salinas/fluidos IV, medias de compresión, Fludrocortisona, Midodrina, Propranolol, Ivabradina.</li>
-              <li><strong>Síndrome de Activación Mastocitaria (MCAS):</strong> Bloqueadores H1/H2 (Cetirizina, Famotidina), Cromoglicato de Sodio.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scientific References & Citations -->
-      <div class="info-citations-box">
-        <div class="citations-header">
-          📚 Citas y Fuentes Bibliográficas de la Investigación
-        </div>
-        <ol class="citations-list">
-          <li><strong>Grach SL, Seltzer J, Chon TY, Ganesh R.</strong> <em>Diagnosis and Management of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.</em> Mayo Clinic Proceedings. 2023 Oct;98(10):1544-1552. DOI: 10.1016/j.mayocp.2023.07.032.</li>
-          <li><strong>Hoppers M, Yellman B, Bateman L, Khan Z, Haddad M, Powers C, Mooney A, Ruschioni T, et al.</strong> <em>Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs).</em> Bateman Horne Center, 1st Edition, 2025.</li>
-          <li><strong>Institute of Medicine (IOM) Committee on the Diagnostic Criteria for Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.</strong> <em>Beyond Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Redefining an Illness.</em> Washington (DC): National Academies Press (US); 2015.</li>
-          <li><strong>NICE (National Institute for Health and Care Excellence).</strong> <em>Myalgic encephalomyelitis (or encephalopathy)/chronic fatigue syndrome: diagnosis and management.</em> NICE guideline [NG206], 2021.</li>
-        </ol>
       </div>
     </div>
   </div>
@@ -930,8 +757,10 @@
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     const slidesData = [
+      // MOMENTOS DEL DOCUMENTAL (1 a 6)
       {
         id: 1,
+        type: 'video',
         startTimeStr: "00:23",
         endTimeStr: "01:30",
         startSeconds: 23,
@@ -943,6 +772,7 @@
       },
       {
         id: 2,
+        type: 'video',
         startTimeStr: "04:28",
         endTimeStr: "06:10",
         startSeconds: 268,
@@ -954,6 +784,7 @@
       },
       {
         id: 3,
+        type: 'video',
         startTimeStr: "12:31",
         endTimeStr: "14:30",
         startSeconds: 751,
@@ -965,6 +796,7 @@
       },
       {
         id: 4,
+        type: 'video',
         startTimeStr: "16:52",
         endTimeStr: "18:00",
         startSeconds: 1012,
@@ -976,6 +808,7 @@
       },
       {
         id: 5,
+        type: 'video',
         startTimeStr: "41:01",
         endTimeStr: "42:00",
         startSeconds: 2461,
@@ -987,6 +820,7 @@
       },
       {
         id: 6,
+        type: 'video',
         startTimeStr: "52:59",
         endTimeStr: "55:51",
         startSeconds: 3179,
@@ -995,6 +829,78 @@
         speaker: "— Médico Evaluador de la Seguridad Social (GMD)",
         dialogueES: "Cuando trabajaba como médico de aseguradora, pensaba que estos pacientes solo estaban cansados. Los pacientes dicen la verdad desde 1990. Es hora de escuchar atentamente a los pacientes.",
         dialogueEN: "When I worked as an insurance doctor, I thought these patients were just tired. Patients have been telling the truth since 1990. It is time to listen carefully to patients."
+      },
+
+      // SECCIÓN INFOGRÁFICA DE IMPACTO ALARMANTE (Momento 7 a 11)
+      {
+        id: 7,
+        type: 'infographic',
+        tag: "🚨 DATO ALARMANTE #1: LA EPIDEMIA SILENCIOSA",
+        headline: "🚨 Incapacidad Masiva: Más del 75% no puede volver a trabajar",
+        speaker: "— Síntesis Científica (Bateman Horne Center 2025)",
+        dialogueES: "La Encefalomielitis Miálgica (EM/SFC) y el COVID Persistente destruyen la vida productiva. Más del 75% queda incapacitado para trabajar y el 25% queda postrado en cama sin poder salir de habitaciones oscuras.",
+        dialogueEN: "ME/CFS and Long COVID destroy productive life. Over 75% become unable to work full-time, and 25% remain bedridden in dark rooms unable to tolerate light or sound.",
+        stats: [
+          { number: "> 75%", label: "Incapacidad Laboral", desc: "Perdida total o severa de la capacidad de mantener un empleo o estudio.", color: "red" },
+          { number: "25%", label: "Enfermedad Severa", desc: "Confinados permanentemente en cama o sillas de ruedas en cuartos oscuros.", color: "red" },
+          { number: "67 Mil", label: "Millones de Dólares", desc: "Costo económico anual estimado por pérdida de productividad y salud.", color: "amber" }
+        ]
+      },
+      {
+        id: 8,
+        type: 'infographic',
+        tag: "⚠️ DATO ALARMANTE #2: EL PELIGRO DEL EJERCICIO",
+        headline: "⚠️ El Error Médico Mortal: El Ejercicio Gradual (GET) empora al 80%",
+        speaker: "— Advertencia Internacional (CDC, NICE & Mayo Clinic 2023)",
+        dialogueES: "Prescribir ejercicio a estos pacientes empeora gravemente su condición. El 80-90% sufre recaídas destructivas. El CDC y la OMS han CONTRAINDICADO formalmente el ejercicio gradual (GET).",
+        dialogueEN: "Prescribing exercise to these patients causes severe physical harm. 80-90% experience catastrophic relapses. CDC and WHO have formally CONTRAINDICATED Graded Exercise Therapy (GET).",
+        stats: [
+          { number: "80-90%", label: "Recaída por Ejercicio", desc: "El ejercicio gradual (GET) destruye la capacidad celular y causa daño permanente.", color: "red" },
+          { number: "PROHIBIDO", label: "GET Contraindicado", desc: "Retirado de todas las guías médicas internacionales oficiales por peligro biológico.", color: "amber" },
+          { number: "PACING", label: "Regla Dorada", desc: "Gestión estricta de energía dentro del Sobre Energético para evitar colapsos.", color: "cyan" }
+        ]
+      },
+      {
+        id: 9,
+        type: 'infographic',
+        tag: "⏱️ DATO ALARMANTE #3: LA TRAGEDIA DEL DIAGNÓSTICO",
+        headline: "⏱️ 3 a 5 Años de Espera y el 84% Vive Sin Diagnóstico",
+        speaker: "— Impacto en la Salud Pública (IOM/NAM & Mayo Clinic 2023)",
+        dialogueES: "Los pacientes tardan entre 3 y 5 años en ser diagnosticados correctamente. Más del 84% de las personas que sufren esta enfermedad jamás reciben una etiqueta médica precisa y son ignorados.",
+        dialogueEN: "Patients wait between 3 and 5 years to receive an accurate diagnosis. More than 84% of affected individuals remain undiagnosed and neglected.",
+        stats: [
+          { number: "3 a 5", label: "Años de Demora", desc: "Tiempo medio que tarda un paciente en ser escuchado y diagnosticado.", color: "amber" },
+          { number: "> 84%", label: "Sin Diagnóstico", desc: "Viven etiquetados erróneamente con ansiedad o depresión sin ayuda real.", color: "red" },
+          { number: "9 de 10", label: "Desinformación", desc: "Médicos de atención primaria no han recibido formación sobre EM/SFC en su carrera.", color: "amber" }
+        ]
+      },
+      {
+        id: 10,
+        type: 'infographic',
+        tag: "💥 DATO ALARMANTE #4: EL SÍNTOMA PATOGNOMÓNICO",
+        headline: "💥 Malestar Pospesfuerzo (PEM): El Colapso Retrasado (24-48h)",
+        speaker: "— Fisiopatología Biológica (Bateman Horne Center 2025)",
+        dialogueES: "El PEM no es cansancio común. Una caminata de 10 minutos o ducharse provoca un colapso celular retrasado a las 24-48 horas, dejando al paciente postrado durante días o semanas.",
+        dialogueEN: "PEM is not ordinary tiredness. A 10-minute walk or taking a shower triggers delayed cellular breakdown 24-48 hours later, causing multi-week crashes.",
+        stats: [
+          { number: "24-48h", label: "Inicio Retrasado", desc: "El colapso inmune y mitocondrial ocurre días después del esfuerzo mínimo.", color: "amber" },
+          { number: "0 %", label: "Recuperación Rápida", desc: "Ducharse o hablar por teléfono puede agotar el combustible celular por semanas.", color: "red" },
+          { number: "ATP ⬇", label: "Fallo Mitocondrial", desc: "Colapso documentado en la producción de energía celular a nivel mitocondrial.", color: "cyan" }
+        ]
+      },
+      {
+        id: 11,
+        type: 'infographic',
+        tag: "🔬 DATO CIENTÍFICO #5: BIOLOGÍA VS. MITO",
+        headline: "🔬 Evidencia Biolólgica Comprobada: Neuroinflamación y Disautonomía",
+        speaker: "— Consenso Científico Multidisciplinario (Mayo Clinic & BHC 2025)",
+        dialogueES: "Estudios científicos avanzados demuestran neuroinflamación en el tronco cerebral, hipoperfusión cerebral (POTS/Intolerancia Ortostática) y disfunción inmune. ¡No es psicológico!",
+        dialogueEN: "Advanced scientific studies demonstrate brainstem neuroinflammation, cerebral hypoperfusion (POTS/Orthostatic Intolerance), and immune dysfunction. It is NOT psychological!",
+        stats: [
+          { number: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta de flujo cerebral.", color: "cyan" },
+          { number: "MCAS", label: "Activación Mastocitaria", desc: "Reacciones inmunes e inflamación descontrolada en múltiples órganos.", color: "cyan" },
+          { number: "LDN", label: "Tratamiento Neuroinmune", desc: "Uso de Naltrexona a Dosis Bajas y Piridostigmina para reducir la neuroinflamación.", color: "green" }
+        ]
       }
     ];
 
@@ -1025,8 +931,7 @@
         banner.classList.add('fade-out-total');
         hideFocusSlide();
       } else if (event.data === YT.PlayerState.PAUSED) {
-        if (!document.getElementById('focus-slide-modal').classList.contains('active') &&
-            !document.getElementById('infographic-modal').classList.contains('active')) {
+        if (!document.getElementById('focus-slide-modal').classList.contains('active')) {
           banner.classList.remove('fade-out-total');
         }
       }
@@ -1035,10 +940,11 @@
     function startAutoStopCheck() {
       if (checkIntervalTimer) clearInterval(checkIntervalTimer);
       checkIntervalTimer = setInterval(() => {
-        if (isPlayerReady && player && typeof player.getPlayerState === 'function') {
+        const item = slidesData[currentIndex];
+        if (item.type === 'video' && isPlayerReady && player && typeof player.getPlayerState === 'function') {
           if (player.getPlayerState() === YT.PlayerState.PLAYING) {
             const currentTime = player.getCurrentTime();
-            const targetEnd = slidesData[currentIndex].endSeconds;
+            const targetEnd = item.endSeconds;
             if (currentTime >= targetEnd) {
               player.pauseVideo();
               showFocusSlide();
@@ -1058,28 +964,23 @@
       document.getElementById('focus-speaker').textContent = item.speaker;
       
       const dialogueText = currentLang === 'es' ? item.dialogueES : item.dialogueEN;
-      document.getElementById('focus-dialogue').innerHTML = `<strong>Diálogo Destacado:</strong> "${dialogueText}"`;
+      document.getElementById('focus-dialogue').innerHTML = `<strong>${item.type === 'video' ? 'Diálogo Destacado' : 'Síntesis Científica'}:</strong> "${dialogueText}"`;
 
       document.getElementById('focus-backdrop').classList.add('active');
       document.getElementById('focus-slide-modal').classList.add('active');
+
+      if (item.type === 'infographic') {
+        document.getElementById('replay-btn').style.display = 'none';
+        document.getElementById('focus-badge').textContent = `📊 INFOGRAFÍA DE IMPACTO #${item.id - 6}`;
+      } else {
+        document.getElementById('replay-btn').style.display = 'flex';
+        document.getElementById('focus-badge').innerHTML = `✨ CITA CLAVE DEL MOMENTO <span id="focus-moment-id">${item.id}</span>`;
+      }
     }
 
     function hideFocusSlide() {
       document.getElementById('focus-backdrop').classList.remove('active');
       document.getElementById('focus-slide-modal').classList.remove('active');
-    }
-
-    function toggleInfographic(forceOpen) {
-      const modal = document.getElementById('infographic-modal');
-      const backdrop = document.getElementById('focus-backdrop');
-      if (forceOpen) {
-        if (isPlayerReady && player && typeof player.pauseVideo === 'function') player.pauseVideo();
-        backdrop.classList.add('active');
-        modal.classList.add('active');
-      } else {
-        backdrop.classList.remove('active');
-        modal.classList.remove('active');
-      }
     }
 
     function replayCurrentClip() {
@@ -1091,7 +992,12 @@
       hideFocusSlide();
       if (currentIndex < slidesData.length - 1) {
         updateSlide(currentIndex + 1);
-        playFragment();
+        const nextItem = slidesData[currentIndex];
+        if (nextItem.type === 'video') {
+          playFragment();
+        } else {
+          showFocusSlide();
+        }
       } else {
         updateSlide(0);
         playFragment();
@@ -1117,18 +1023,55 @@
       const banner = document.getElementById('overlay-banner');
       banner.classList.remove('fade-out-total');
 
-      document.getElementById('banner-tag').textContent = `Momento ${item.id} / ${slidesData.length}`;
+      document.getElementById('banner-tag').textContent = `${item.type === 'video' ? 'Momento' : 'Infografía'} ${item.id} / ${slidesData.length}`;
       document.getElementById('banner-speaker').textContent = item.speaker;
       document.getElementById('banner-headline').textContent = item.headline;
-      document.getElementById('start-time').textContent = item.startTimeStr;
-      document.getElementById('end-time').textContent = item.endTimeStr;
+      document.getElementById('start-time').textContent = item.startTimeStr || "INFO";
+      document.getElementById('end-time').textContent = item.endTimeStr || "SLIDE";
 
-      updateDialogueText();
+      if (item.type === 'video') {
+        document.getElementById('video-frame').style.opacity = '1';
+        document.getElementById('video-frame').style.pointerEvents = 'auto';
+        document.getElementById('slide-visual-frame').classList.remove('active');
+        document.getElementById('main-play-btn').style.display = 'flex';
 
-      if (isPlayerReady && player && typeof player.seekTo === 'function') {
-        player.seekTo(item.startSeconds, true);
+        if (isPlayerReady && player && typeof player.seekTo === 'function') {
+          player.seekTo(item.startSeconds, true);
+        }
+      } else {
+        // INFOGRAPHIC SLIDE MODE (Moments 7-11)
+        if (isPlayerReady && player && typeof player.pauseVideo === 'function') {
+          player.pauseVideo();
+        }
+        document.getElementById('video-frame').style.opacity = '0';
+        document.getElementById('video-frame').style.pointerEvents = 'none';
+        document.getElementById('slide-visual-frame').classList.add('active');
+        document.getElementById('main-play-btn').style.display = 'none';
+
+        // Update Infographic Visual Card
+        document.getElementById('slide-tag').textContent = item.tag;
+        document.getElementById('slide-title-text').textContent = item.headline;
+        
+        const statsGrid = document.getElementById('slide-stats-grid');
+        statsGrid.innerHTML = '';
+        item.stats.forEach(st => {
+          const div = document.createElement('div');
+          div.className = 'stat-box';
+          div.innerHTML = `
+            <div class="stat-number ${st.color}">${st.number}</div>
+            <div class="stat-label">${st.label}</div>
+            <div class="stat-desc">${st.desc}</div>
+          `;
+          statsGrid.appendChild(div);
+        });
+
+        // Show Focus Slide Modal automatically for full projection impact
+        setTimeout(() => {
+          showFocusSlide();
+        }, 600);
       }
 
+      updateDialogueText();
       renderSidebarList();
       document.getElementById('side-prev-btn').disabled = currentIndex === 0;
       document.getElementById('side-next-btn').disabled = currentIndex === slidesData.length - 1;
@@ -1137,9 +1080,9 @@
     function updateDialogueText() {
       const item = slidesData[currentIndex];
       const text = currentLang === 'es' ? item.dialogueES : item.dialogueEN;
-      document.getElementById('banner-dialogue').innerHTML = `<strong>Diálogo:</strong> "${text}"`;
+      document.getElementById('banner-dialogue').innerHTML = `<strong>${item.type === 'video' ? 'Diálogo' : 'Resumen'}:</strong> "${text}"`;
       if (document.getElementById('focus-slide-modal').classList.contains('active')) {
-        document.getElementById('focus-dialogue').innerHTML = `<strong>Diálogo Destacado:</strong> "${text}"`;
+        document.getElementById('focus-dialogue').innerHTML = `<strong>${item.type === 'video' ? 'Diálogo Destacado' : 'Síntesis Científica'}:</strong> "${text}"`;
       }
     }
 
@@ -1151,20 +1094,22 @@
     }
 
     function playFragment() {
-      hideFocusSlide();
-      toggleInfographic(false);
-      const banner = document.getElementById('overlay-banner');
-      banner.classList.add('fade-out-total');
-      
       const item = slidesData[currentIndex];
+      if (item.type === 'video') {
+        hideFocusSlide();
+        const banner = document.getElementById('overlay-banner');
+        banner.classList.add('fade-out-total');
 
-      if (isPlayerReady && player) {
-        if (typeof player.seekTo === 'function') {
-          player.seekTo(item.startSeconds, true);
+        if (isPlayerReady && player) {
+          if (typeof player.seekTo === 'function') {
+            player.seekTo(item.startSeconds, true);
+          }
+          if (typeof player.playVideo === 'function') {
+            player.playVideo();
+          }
         }
-        if (typeof player.playVideo === 'function') {
-          player.playVideo();
-        }
+      } else {
+        showFocusSlide();
       }
     }
 
@@ -1181,15 +1126,15 @@
       container.innerHTML = '';
       slidesData.forEach((item, idx) => {
         const div = document.createElement('div');
-        div.className = `sidebar-moment-item ${idx === currentIndex ? 'active' : ''}`;
+        div.className = `sidebar-moment-item ${idx === currentIndex ? 'active' : ''} ${item.type === 'infographic' ? 'is-infographic' : ''}`;
         div.onclick = () => {
           updateSlide(idx);
-          playFragment();
+          if (item.type === 'video') playFragment();
         };
         div.innerHTML = `
           <div class="item-top-row">
-            <span class="item-id-badge">Momento ${item.id}</span>
-            <span class="item-time">${item.startTimeStr}</span>
+            <span class="item-id-badge ${item.type === 'infographic' ? 'info-badge-tag' : ''}">${item.type === 'video' ? 'Momento ' + item.id : 'Infografía ' + (item.id - 6)}</span>
+            <span class="item-time">${item.startTimeStr || 'Dato Impacto'}</span>
           </div>
           <div class="item-title">${item.headline}</div>
         `;
@@ -1199,17 +1144,19 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        toggleInfographic(false);
         hideFocusSlide();
       }
       if (e.key === 'ArrowLeft') prevSlide();
       if (e.key === 'ArrowRight') nextSlide();
       if (e.key === ' ') {
         e.preventDefault();
-        if (isPlayerReady && player && typeof player.getPlayerState === 'function') {
+        const item = slidesData[currentIndex];
+        if (item.type === 'video' && isPlayerReady && player && typeof player.getPlayerState === 'function') {
           const state = player.getPlayerState();
           if (state === YT.PlayerState.PLAYING) player.pauseVideo();
           else player.playVideo();
+        } else {
+          goToNextMoment();
         }
       }
     });
