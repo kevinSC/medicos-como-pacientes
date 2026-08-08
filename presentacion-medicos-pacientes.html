@@ -703,6 +703,12 @@
       align-items: center;
       gap: 12px;
       box-shadow: 0 6px 30px rgba(6, 182, 212, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .next-moment-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 36px rgba(6, 182, 212, 0.8);
     }
 
     /* LEFT SIDEBAR TRIGGER ZONE */
@@ -793,7 +799,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: justify;
+      justify-content: center;
     }
 
     .sidebar-close-btn:hover {
@@ -1218,7 +1224,7 @@
         dialogueEN: "Advanced scientific studies demonstrate brainstem neuroinflammation, cerebral hypoperfusion (POTS/Orthostatic Intolerance), and immune dysfunction. It is NOT psychological!",
         apaCitation: "Grach, S. L., Seltzer, J., Chon, T. Y., & Ganesh, R. (2023). Diagnosis and management of myalgic encephalomyelitis/chronic fatigue syndrome. Mayo Clinic Proceedings, 98(10), 1548–1550. https://doi.org/10.1016/j.mayocp.2023.07.032",
         stats: [
-          { textDisplay: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta of flujo cerebral.", color: "cyan" },
+          { textDisplay: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta de flujo cerebral.", color: "cyan" },
           { textDisplay: "MCAS", label: "Activación Mastocitaria", desc: "Reacciones inmunes e inflamación descontrolada en múltiples órganos.", color: "cyan" },
           { textDisplay: "LDN", label: "Tratamiento Neuroinmune", desc: "Uso de Naltrexona a Dosis Bajas y Piridostigmina para reducir la neuroinflamación.", color: "green" }
         ]
@@ -1307,6 +1313,29 @@
       document.getElementById('focus-slide-modal').classList.remove('active');
     }
 
+    /* GLOBAL SLIDE NAVIGATION FUNCTIONS */
+    function goToNextMoment() {
+      hideFocusSlide();
+      closeCinemaImageModal();
+      if (currentIndex < slidesData.length - 1) {
+        updateSlide(currentIndex + 1);
+      } else {
+        updateSlide(0);
+      }
+    }
+
+    function prevSlide() {
+      hideFocusSlide();
+      closeCinemaImageModal();
+      if (currentIndex > 0) {
+        updateSlide(currentIndex - 1);
+      }
+    }
+
+    function nextSlide() {
+      goToNextMoment();
+    }
+
     function openCinemaImageModal() {
       const item = slidesData[currentIndex];
       if (item.type === 'infographic') {
@@ -1349,14 +1378,6 @@
       } else {
         showFocusSlide();
       }
-    }
-
-    function prevSlide() {
-      if (currentIndex > 0) updateSlide(currentIndex - 1);
-    }
-
-    function nextSlide() {
-      if (currentIndex < slidesData.length - 1) updateSlide(currentIndex + 1);
     }
 
     function updateSlide(index) {
@@ -1491,6 +1512,47 @@
         `;
         container.appendChild(div);
       });
+    }
+
+    /* CREATIVE COUNT-UP ANIMATION FOR NUMBERS */
+    function animateStatNumbers() {
+      const numberEls = document.querySelectorAll('.animated-num');
+      numberEls.forEach(el => {
+        const target = parseInt(el.getAttribute('data-target'));
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        
+        if (isNaN(target)) return;
+        
+        let start = 0;
+        const duration = 1500;
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease Out Quad
+          const easeProgress = progress * (2 - progress);
+          const current = Math.floor(easeProgress * target);
+          el.textContent = `${prefix}${current}${suffix}`;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = `${prefix}${target}${suffix}`;
+          }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    function toggleSidebar(forceOpen) {
+      const sidebar = document.getElementById('left-sidebar');
+      if (forceOpen !== undefined) {
+        if (forceOpen) sidebar.classList.add('open');
+        else sidebar.classList.remove('open');
+      } else {
+        sidebar.classList.toggle('open');
+      }
     }
 
     document.addEventListener('keydown', (e) => {
