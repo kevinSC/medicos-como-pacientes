@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Presentación e Infografía de Impacto</title>
+  <title>Doctors as Patients: Presentación e Infografía de Impacto Animada</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@
       border: none;
     }
 
-    /* Infographic Slide Visual Frame (For Moments 7-11) */
+    /* Visual Infographic Slide Frame (For Moments 7-11) */
     .slide-visual-frame {
       position: absolute;
       top: 0;
@@ -100,12 +100,34 @@
       gap: 28px;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
+      transform: translateY(30px) scale(0.98);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-visual-frame.active .slide-card-hero {
+      transform: translateY(0) scale(1);
     }
 
     .slide-badge-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+
+    /* Pulsing Alarm Animation */
+    @keyframes pulse-alarm {
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 25px 8px rgba(239, 68, 68, 0.4);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        transform: scale(1);
+      }
     }
 
     .slide-tag {
@@ -117,7 +139,7 @@
       border-radius: 20px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+      animation: pulse-alarm 2.5s infinite;
     }
 
     .slide-source {
@@ -134,6 +156,7 @@
       color: #ffffff;
       border-left: 8px solid var(--accent-cyan);
       padding-left: 20px;
+      text-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
     }
 
     .slide-stats-grid {
@@ -143,43 +166,119 @@
       margin-top: 10px;
     }
 
+    /* Staggered Card Animation */
+    @keyframes fadeInUpStagger {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .stat-box {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 18px;
-      padding: 20px 24px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      animation: fadeInUpStagger 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
+    .stat-box:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(6, 182, 212, 0.25);
+    }
+
+    /* Animated Stat Number */
     .stat-number {
       font-family: var(--font-title);
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 900;
       color: var(--accent-cyan);
       line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .stat-number.red {
       color: var(--accent-red);
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
     }
 
     .stat-number.amber {
       color: var(--accent-amber);
+      text-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+    }
+
+    .stat-number.cyan {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+    }
+
+    .stat-number.green {
+      color: var(--accent-green);
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
     }
 
     .stat-label {
-      font-size: 1.05rem;
-      font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 800;
       color: #f1f5f9;
       line-height: 1.35;
     }
 
     .stat-desc {
-      font-size: 0.9rem;
+      font-size: 0.925rem;
       color: #94a3b8;
       line-height: 1.5;
+    }
+
+    /* Creative Dynamic Energy Gauge Bar (PEM Visualizer) */
+    .energy-gauge-container {
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 6px;
+      position: relative;
+    }
+
+    @keyframes drainEnergy {
+      0% {
+        width: 100%;
+        background: var(--accent-green);
+      }
+      50% {
+        width: 50%;
+        background: var(--accent-amber);
+      }
+      100% {
+        width: 15%;
+        background: var(--accent-red);
+        box-shadow: 0 0 12px var(--accent-red);
+      }
+    }
+
+    .energy-gauge-bar {
+      height: 100%;
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .slide-visual-frame.active .energy-gauge-bar {
+      animation: drainEnergy 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     /* Blur Backdrop for Auto-Stop Focus Mode */
@@ -673,8 +772,20 @@
         <h2 class="slide-title-text" id="slide-title-text">
           La Epidemia Silenciosa: Incapacidad Severa y Confinamiento
         </h2>
+
+        <!-- Creative Interactive Gauge Bar for PEM / Energy -->
+        <div id="gauge-wrapper" style="display:none; flex-direction:column; gap:4px;">
+          <div style="display:flex; justify-space-between; font-size:0.85rem; font-weight:800; color:var(--accent-red);">
+            <span>⚡ Nivel de Energía Mitocondrial (Post-Esfuerzo Mínimo)</span>
+            <span id="gauge-percent-text">100% ➔ 15% (COLAPSO)</span>
+          </div>
+          <div class="energy-gauge-container">
+            <div class="energy-gauge-bar"></div>
+          </div>
+        </div>
+
         <div class="slide-stats-grid" id="slide-stats-grid">
-          <!-- Dynamic stats injected here -->
+          <!-- Dynamic animated stats injected here -->
         </div>
       </div>
     </div>
@@ -831,7 +942,7 @@
         dialogueEN: "When I worked as an insurance doctor, I thought these patients were just tired. Patients have been telling the truth since 1990. It is time to listen carefully to patients."
       },
 
-      // SECCIÓN INFOGRÁFICA DE IMPACTO ALARMANTE (Momento 7 a 11)
+      // SECCIÓN INFOGRÁFICA ANIMADA DE IMPACTO ALARMANTE (Momento 7 a 11)
       {
         id: 7,
         type: 'infographic',
@@ -841,23 +952,23 @@
         dialogueES: "La Encefalomielitis Miálgica (EM/SFC) y el COVID Persistente destruyen la vida productiva. Más del 75% queda incapacitado para trabajar y el 25% queda postrado en cama sin poder salir de habitaciones oscuras.",
         dialogueEN: "ME/CFS and Long COVID destroy productive life. Over 75% become unable to work full-time, and 25% remain bedridden in dark rooms unable to tolerate light or sound.",
         stats: [
-          { number: "> 75%", label: "Incapacidad Laboral", desc: "Perdida total o severa de la capacidad de mantener un empleo o estudio.", color: "red" },
-          { number: "25%", label: "Enfermedad Severa", desc: "Confinados permanentemente en cama o sillas de ruedas en cuartos oscuros.", color: "red" },
-          { number: "67 Mil", label: "Millones de Dólares", desc: "Costo económico anual estimado por pérdida de productividad y salud.", color: "amber" }
+          { targetVal: 75, prefix: "> ", suffix: "%", label: "Incapacidad Laboral", desc: "Pérdida total o severa de la capacidad de mantener un empleo o estudio.", color: "red" },
+          { targetVal: 25, prefix: "", suffix: "%", label: "Enfermedad Severa", desc: "Confinados permanentemente en cama o sillas de ruedas en cuartos oscuros.", color: "red" },
+          { targetVal: 67, prefix: "", suffix: " Mil M$", label: "Impacto Económico", desc: "Costo económico anual estimado por pérdida de productividad y salud.", color: "amber" }
         ]
       },
       {
         id: 8,
         type: 'infographic',
         tag: "⚠️ DATO ALARMANTE #2: EL PELIGRO DEL EJERCICIO",
-        headline: "⚠️ El Error Médico Mortal: El Ejercicio Gradual (GET) empora al 80%",
+        headline: "⚠️ El Error Médico Común: El Ejercicio Gradual (GET) empeora al 80-90%",
         speaker: "— Advertencia Internacional (CDC, NICE & Mayo Clinic 2023)",
         dialogueES: "Prescribir ejercicio a estos pacientes empeora gravemente su condición. El 80-90% sufre recaídas destructivas. El CDC y la OMS han CONTRAINDICADO formalmente el ejercicio gradual (GET).",
         dialogueEN: "Prescribing exercise to these patients causes severe physical harm. 80-90% experience catastrophic relapses. CDC and WHO have formally CONTRAINDICATED Graded Exercise Therapy (GET).",
         stats: [
-          { number: "80-90%", label: "Recaída por Ejercicio", desc: "El ejercicio gradual (GET) destruye la capacidad celular y causa daño permanente.", color: "red" },
-          { number: "PROHIBIDO", label: "GET Contraindicado", desc: "Retirado de todas las guías médicas internacionales oficiales por peligro biológico.", color: "amber" },
-          { number: "PACING", label: "Regla Dorada", desc: "Gestión estricta de energía dentro del Sobre Energético para evitar colapsos.", color: "cyan" }
+          { targetVal: 90, prefix: "", suffix: "%", label: "Recaída por Ejercicio", desc: "El ejercicio gradual (GET) destruye la capacidad celular y causa daño permanente.", color: "red" },
+          { textDisplay: "PROHIBIDO", label: "GET Contraindicado", desc: "Retirado de todas las guías médicas internacionales oficiales por peligro biológico.", color: "amber" },
+          { textDisplay: "PACING", label: "Regla Dorada", desc: "Gestión estricta de energía dentro del Sobre Energético para evitar colapsos.", color: "cyan" }
         ]
       },
       {
@@ -869,37 +980,38 @@
         dialogueES: "Los pacientes tardan entre 3 y 5 años en ser diagnosticados correctamente. Más del 84% de las personas que sufren esta enfermedad jamás reciben una etiqueta médica precisa y son ignorados.",
         dialogueEN: "Patients wait between 3 and 5 years to receive an accurate diagnosis. More than 84% of affected individuals remain undiagnosed and neglected.",
         stats: [
-          { number: "3 a 5", label: "Años de Demora", desc: "Tiempo medio que tarda un paciente en ser escuchado y diagnosticado.", color: "amber" },
-          { number: "> 84%", label: "Sin Diagnóstico", desc: "Viven etiquetados erróneamente con ansiedad o depresión sin ayuda real.", color: "red" },
-          { number: "9 de 10", label: "Desinformación", desc: "Médicos de atención primaria no han recibido formación sobre EM/SFC en su carrera.", color: "amber" }
+          { targetVal: 5, prefix: "3 a ", suffix: " Años", label: "Años de Demora", desc: "Tiempo medio que tarda un paciente en ser escuchado y diagnosticado.", color: "amber" },
+          { targetVal: 84, prefix: "> ", suffix: "%", label: "Sin Diagnóstico", desc: "Viven etiquetados erróneamente con ansiedad o depresión sin ayuda real.", color: "red" },
+          { targetVal: 9, prefix: "", suffix: " de 10", label: "Desinformación", desc: "Médicos de atención primaria no han recibido formación sobre EM/SFC en su carrera.", color: "amber" }
         ]
       },
       {
         id: 10,
         type: 'infographic',
+        showGauge: true,
         tag: "💥 DATO ALARMANTE #4: EL SÍNTOMA PATOGNOMÓNICO",
         headline: "💥 Malestar Pospesfuerzo (PEM): El Colapso Retrasado (24-48h)",
         speaker: "— Fisiopatología Biológica (Bateman Horne Center 2025)",
         dialogueES: "El PEM no es cansancio común. Una caminata de 10 minutos o ducharse provoca un colapso celular retrasado a las 24-48 horas, dejando al paciente postrado durante días o semanas.",
         dialogueEN: "PEM is not ordinary tiredness. A 10-minute walk or taking a shower triggers delayed cellular breakdown 24-48 hours later, causing multi-week crashes.",
         stats: [
-          { number: "24-48h", label: "Inicio Retrasado", desc: "El colapso inmune y mitocondrial ocurre días después del esfuerzo mínimo.", color: "amber" },
-          { number: "0 %", label: "Recuperación Rápida", desc: "Ducharse o hablar por teléfono puede agotar el combustible celular por semanas.", color: "red" },
-          { number: "ATP ⬇", label: "Fallo Mitocondrial", desc: "Colapso documentado en la producción de energía celular a nivel mitocondrial.", color: "cyan" }
+          { targetVal: 48, prefix: "24-", suffix: " horas", label: "Inicio Retrasado", desc: "El colapso inmune y mitocondrial ocurre días después del esfuerzo mínimo.", color: "amber" },
+          { textDisplay: "ATP ⬇", label: "Fallo Mitocondrial", desc: "Colapso documentado en la producción de energía celular a nivel mitocondrial.", color: "red" },
+          { targetVal: 100, prefix: "", suffix: "%", label: "Sensibilidad Orgánica", desc: "Ducharse o hablar por teléfono agota el combustible metabólico por semanas.", color: "red" }
         ]
       },
       {
         id: 11,
         type: 'infographic',
         tag: "🔬 DATO CIENTÍFICO #5: BIOLOGÍA VS. MITO",
-        headline: "🔬 Evidencia Biolólgica Comprobada: Neuroinflamación y Disautonomía",
+        headline: "🔬 Evidencia Biológica Comprobada: Neuroinflamación y Disautonomía",
         speaker: "— Consenso Científico Multidisciplinario (Mayo Clinic & BHC 2025)",
         dialogueES: "Estudios científicos avanzados demuestran neuroinflamación en el tronco cerebral, hipoperfusión cerebral (POTS/Intolerancia Ortostática) y disfunción inmune. ¡No es psicológico!",
         dialogueEN: "Advanced scientific studies demonstrate brainstem neuroinflammation, cerebral hypoperfusion (POTS/Orthostatic Intolerance), and immune dysfunction. It is NOT psychological!",
         stats: [
-          { number: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta de flujo cerebral.", color: "cyan" },
-          { number: "MCAS", label: "Activación Mastocitaria", desc: "Reacciones inmunes e inflamación descontrolada en múltiples órganos.", color: "cyan" },
-          { number: "LDN", label: "Tratamiento Neuroinmune", desc: "Uso de Naltrexona a Dosis Bajas y Piridostigmina para reducir la neuroinflamación.", color: "green" }
+          { textDisplay: "POTS", label: "Disfunción Autonómica", desc: "Aumento anormal de la frecuencia cardíaca al ponerse de pie por falta de flujo cerebral.", color: "cyan" },
+          { textDisplay: "MCAS", label: "Activación Mastocitaria", desc: "Reacciones inmunes e inflamación descontrolada en múltiples órganos.", color: "cyan" },
+          { textDisplay: "LDN", label: "Tratamiento Neuroinmune", desc: "Uso de Naltrexona a Dosis Bajas y Piridostigmina para reducir la neuroinflamación.", color: "green" }
         ]
       }
     ];
@@ -1014,6 +1126,37 @@
       }
     }
 
+    /* CREATIVE COUNT-UP ANIMATION FOR NUMBERS */
+    function animateStatNumbers() {
+      const numberEls = document.querySelectorAll('.animated-num');
+      numberEls.forEach(el => {
+        const target = parseInt(el.getAttribute('data-target'));
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        
+        if (isNaN(target)) return;
+        
+        let start = 0;
+        const duration = 1500;
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease Out Quad
+          const easeProgress = progress * (2 - progress);
+          const current = Math.floor(easeProgress * target);
+          el.textContent = `${prefix}${current}${suffix}`;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = `${prefix}${target}${suffix}`;
+          }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
     function updateSlide(index) {
       if (index < 0 || index >= slidesData.length) return;
       currentIndex = index;
@@ -1045,30 +1188,58 @@
         }
         document.getElementById('video-frame').style.opacity = '0';
         document.getElementById('video-frame').style.pointerEvents = 'none';
-        document.getElementById('slide-visual-frame').classList.add('active');
+        
+        const visualFrame = document.getElementById('slide-visual-frame');
+        visualFrame.classList.remove('active');
+        // Trigger CSS reflow to re-run animations
+        void visualFrame.offsetWidth;
+        visualFrame.classList.add('active');
+
         document.getElementById('main-play-btn').style.display = 'none';
 
         // Update Infographic Visual Card
         document.getElementById('slide-tag').textContent = item.tag;
         document.getElementById('slide-title-text').textContent = item.headline;
         
+        // Show energy gauge bar for PEM (Moment 10)
+        const gaugeWrapper = document.getElementById('gauge-wrapper');
+        if (item.showGauge) {
+          gaugeWrapper.style.display = 'flex';
+        } else {
+          gaugeWrapper.style.display = 'none';
+        }
+
         const statsGrid = document.getElementById('slide-stats-grid');
         statsGrid.innerHTML = '';
-        item.stats.forEach(st => {
+        item.stats.forEach((st, idx) => {
           const div = document.createElement('div');
           div.className = 'stat-box';
+          div.style.animationDelay = `${idx * 0.15}s`;
+
+          let numHTML = '';
+          if (st.targetVal !== undefined) {
+            numHTML = `<span class="animated-num" data-target="${st.targetVal}" data-prefix="${st.prefix}" data-suffix="${st.suffix}">0</span>`;
+          } else {
+            numHTML = `<span>${st.textDisplay}</span>`;
+          }
+
           div.innerHTML = `
-            <div class="stat-number ${st.color}">${st.number}</div>
+            <div class="stat-number ${st.color}">${numHTML}</div>
             <div class="stat-label">${st.label}</div>
             <div class="stat-desc">${st.desc}</div>
           `;
           statsGrid.appendChild(div);
         });
 
+        // Trigger creative number count up animation
+        setTimeout(() => {
+          animateStatNumbers();
+        }, 100);
+
         // Show Focus Slide Modal automatically for full projection impact
         setTimeout(() => {
           showFocusSlide();
-        }, 600);
+        }, 800);
       }
 
       updateDialogueText();
