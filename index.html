@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Presentación con Énfasis de Texto de Alto Impacto</title>
+  <title>Doctors as Patients: Presentación e Infografía</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -1049,8 +1049,8 @@
         <strong>Cita Académica APA (7ª ed.):</strong> <span id="modal-apa-text">Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients: The Unseen Struggle of Long COVID & ME/CFS [Documental]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w</span>
       </div>
       <div class="focus-actions">
-        <button class="replay-btn" id="replay-btn" onclick="replayCurrentClip()">
-          ↺ Repetir Fragmento
+        <button class="replay-btn" id="replay-btn" onclick="playFragment()">
+          ▶ Reproducir Fragmento
         </button>
         <button class="next-moment-btn" onclick="goToNextMoment()">
           Siguiente Diapositiva ➔
@@ -1253,9 +1253,7 @@
         banner.classList.add('fade-out-total');
         hideFocusSlide();
       } else if (event.data === YT.PlayerState.PAUSED) {
-        if (!document.getElementById('focus-slide-modal').classList.contains('active')) {
-          banner.classList.remove('fade-out-total');
-        }
+        // When paused by auto-stop or user, show focus modal if at end
       }
     }
 
@@ -1278,7 +1276,7 @@
 
     function showFocusSlide() {
       const banner = document.getElementById('overlay-banner');
-      banner.classList.add('fade-out-total');
+      if (banner) banner.classList.add('fade-out-total');
 
       const item = slidesData[currentIndex];
       document.getElementById('focus-moment-id').textContent = item.id;
@@ -1323,66 +1321,45 @@
       document.getElementById('cinema-image-modal').classList.remove('active');
     }
 
-    function replayCurrentClip() {
-      hideFocusSlide();
-      playFragment();
-    }
+    /* BULLETPROOF PLAY FRAGMENT FUNCTION */
+    function playFragment() {
+      const item = slidesData[currentIndex];
+      if (item.type === 'video') {
+        hideFocusSlide();
+        const banner = document.getElementById('overlay-banner');
+        if (banner) banner.classList.add('fade-out-total');
 
-    function goToNextMoment() {
-      hideFocusSlide();
-      if (currentIndex < slidesData.length - 1) {
-        updateSlide(currentIndex + 1);
-        const nextItem = slidesData[currentIndex];
-        if (nextItem.type === 'video') {
-          playFragment();
+        if (isPlayerReady && player && typeof player.playVideo === 'function') {
+          try {
+            player.seekTo(item.startSeconds, true);
+            player.playVideo();
+            // Backup retry in case seekTo interrupted playVideo on Chrome
+            setTimeout(() => {
+              if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+              }
+            }, 150);
+          } catch (e) {
+            console.error("Error playing video:", e);
+          }
         } else {
-          showFocusSlide();
-        }
-      } else {
-        updateSlide(0);
-        playFragment();
-      }
-    }
-
-    function toggleSidebar(forceOpen) {
-      const sidebar = document.getElementById('left-sidebar');
-      if (forceOpen !== undefined) {
-        if (forceOpen) sidebar.classList.add('open');
-        else sidebar.classList.remove('open');
-      } else {
-        sidebar.classList.toggle('open');
-      }
-    }
-
-    /* CREATIVE COUNT-UP ANIMATION FOR NUMBERS */
-    function animateStatNumbers() {
-      const numberEls = document.querySelectorAll('.animated-num');
-      numberEls.forEach(el => {
-        const target = parseInt(el.getAttribute('data-target'));
-        const prefix = el.getAttribute('data-prefix') || '';
-        const suffix = el.getAttribute('data-suffix') || '';
-        
-        if (isNaN(target)) return;
-        
-        let start = 0;
-        const duration = 1500;
-        const startTime = performance.now();
-
-        function step(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          // Ease Out Quad
-          const easeProgress = progress * (2 - progress);
-          const current = Math.floor(easeProgress * target);
-          el.textContent = `${prefix}${current}${suffix}`;
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          } else {
-            el.textContent = `${prefix}${target}${suffix}`;
+          // Direct fallback if player iframe API is initializing
+          const iframe = document.getElementById('youtube-player');
+          if (iframe) {
+            iframe.src = `https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?autoplay=1&enablejsapi=1&rel=0&start=${item.startSeconds}&cc_load_policy=1`;
           }
         }
-        requestAnimationFrame(step);
-      });
+      } else {
+        showFocusSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) updateSlide(currentIndex - 1);
+    }
+
+    function nextSlide() {
+      if (currentIndex < slidesData.length - 1) updateSlide(currentIndex + 1);
     }
 
     function updateSlide(index) {
@@ -1393,7 +1370,7 @@
       hideFocusSlide();
       closeCinemaImageModal();
       const banner = document.getElementById('overlay-banner');
-      banner.classList.remove('fade-out-total');
+      if (banner) banner.classList.remove('fade-out-total');
 
       document.getElementById('banner-tag').textContent = `${item.type === 'video' ? 'Momento' : 'Infografía'} ${item.id} / ${slidesData.length}`;
       document.getElementById('banner-speaker').textContent = item.speaker;
@@ -1498,34 +1475,6 @@
       updateDialogueText();
     }
 
-    function playFragment() {
-      const item = slidesData[currentIndex];
-      if (item.type === 'video') {
-        hideFocusSlide();
-        const banner = document.getElementById('overlay-banner');
-        banner.classList.add('fade-out-total');
-
-        if (isPlayerReady && player) {
-          if (typeof player.seekTo === 'function') {
-            player.seekTo(item.startSeconds, true);
-          }
-          if (typeof player.playVideo === 'function') {
-            player.playVideo();
-          }
-        }
-      } else {
-        showFocusSlide();
-      }
-    }
-
-    function prevSlide() {
-      if (currentIndex > 0) updateSlide(currentIndex - 1);
-    }
-
-    function nextSlide() {
-      if (currentIndex < slidesData.length - 1) updateSlide(currentIndex + 1);
-    }
-
     function renderSidebarList() {
       const container = document.getElementById('sidebar-moments-list');
       container.innerHTML = '';
@@ -1560,7 +1509,7 @@
         if (item.type === 'video' && isPlayerReady && player && typeof player.getPlayerState === 'function') {
           const state = player.getPlayerState();
           if (state === YT.PlayerState.PLAYING) player.pauseVideo();
-          else player.playVideo();
+          else playFragment();
         } else {
           goToNextMoment();
         }
