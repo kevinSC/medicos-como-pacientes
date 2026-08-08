@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Modo Proyección</title>
+  <title>Doctors as Patients: Modo Proyección & Infografía Médica</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -13,6 +13,9 @@
       --accent-cyan: #06b6d4;
       --accent-blue: #3b82f6;
       --accent-amber: #fbbf24;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
       --text-white: #ffffff;
       --text-gray: #94a3b8;
       --glass-bg: rgba(9, 13, 22, 0.94);
@@ -54,14 +57,14 @@
       border: none;
     }
 
-    /* Blur Backdrop on Auto-Stop Focus Mode */
+    /* Blur Backdrop on Auto-Stop Focus Mode & Infographic */
     .focus-backdrop {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.82);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       z-index: 60;
@@ -80,7 +83,7 @@
       position: absolute;
       top: 24px;
       left: 24px;
-      max-width: 620px;
+      max-width: 650px;
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -156,6 +159,7 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 4px;
+      gap: 10px;
     }
 
     .lang-toggle {
@@ -198,6 +202,21 @@
 
     .play-btn:hover {
       transform: scale(1.04);
+    }
+
+    .infographic-trigger-btn {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
     }
 
     /* MASSIVE PROJECTION FOCUS SLIDE MODAL */
@@ -315,6 +334,205 @@
       box-shadow: 0 6px 30px rgba(6, 182, 212, 0.6);
     }
 
+    /* SCIENTIFIC INFOGRAPHIC MODAL */
+    .infographic-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 94vw;
+      max-width: 1350px;
+      max-height: 92vh;
+      background: rgba(8, 12, 22, 0.97);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 2px solid rgba(139, 92, 246, 0.6);
+      border-radius: 28px;
+      padding: 36px 44px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.95), 0 0 80px rgba(139, 92, 246, 0.4);
+      z-index: 80;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      overflow-y: auto;
+    }
+
+    .infographic-modal.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .info-modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 20px;
+    }
+
+    .info-modal-title-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .info-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      align-self: flex-start;
+    }
+
+    .info-title {
+      font-family: var(--font-title);
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .info-subtitle {
+      font-size: 1rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .info-close-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .info-close-btn:hover {
+      background: rgba(239, 68, 68, 0.8);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 22px;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+    }
+
+    .info-card-icon {
+      font-size: 1.6rem;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid var(--accent-cyan);
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-card-title {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .info-card-body {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .info-card-body ul {
+      margin-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .info-card-body strong {
+      color: var(--accent-cyan);
+    }
+
+    .tag-red {
+      color: var(--accent-red);
+      font-weight: 800;
+    }
+
+    .tag-green {
+      color: var(--accent-green);
+      font-weight: 800;
+    }
+
+    .info-citations-box {
+      background: rgba(6, 182, 212, 0.06);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .citations-header {
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-amber);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .citations-list {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .citations-list li {
+      margin-left: 18px;
+    }
+
     /* LEFT SIDEBAR TRIGGER ZONE */
     .sidebar-trigger-zone {
       position: absolute;
@@ -351,7 +569,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 360px;
+      width: 370px;
       height: 100vh;
       background: rgba(7, 10, 18, 0.96);
       backdrop-filter: blur(24px);
@@ -362,7 +580,7 @@
       padding: 28px 24px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
       transform: translateX(-100%);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -482,9 +700,31 @@
 
     .sidebar-footer-controls {
       display: flex;
+      flex-direction: column;
       gap: 10px;
       padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .side-infographic-btn {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav-btns-row {
+      display: flex;
+      gap: 10px;
     }
 
     .sidebar-nav-btn {
@@ -510,7 +750,6 @@
 
   <div class="viewport">
     <div class="video-frame">
-      <!-- Native Embed with YouTube NoCookie to prevent Error 153 in file:// protocol -->
       <iframe id="youtube-player" src="https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?enablejsapi=1&rel=0&start=23&cc_load_policy=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
@@ -536,8 +775,13 @@
       </div>
 
       <div class="sidebar-footer-controls">
-        <button id="side-prev-btn" class="sidebar-nav-btn" onclick="prevSlide()">‹ Anterior</button>
-        <button id="side-next-btn" class="sidebar-nav-btn" onclick="nextSlide()">Siguiente ›</button>
+        <button class="side-infographic-btn" onclick="toggleInfographic(true)">
+          📊 Infografía Médica 2025
+        </button>
+        <div class="nav-btns-row">
+          <button id="side-prev-btn" class="sidebar-nav-btn" onclick="prevSlide()">‹ Anterior</button>
+          <button id="side-next-btn" class="sidebar-nav-btn" onclick="nextSlide()">Siguiente ›</button>
+        </div>
       </div>
     </aside>
 
@@ -562,6 +806,10 @@
           <button id="lang-en-btn" class="lang-btn" onclick="setLang('en')">EN 🇬🇧</button>
         </div>
 
+        <button class="infographic-trigger-btn" onclick="toggleInfographic(true)">
+          📊 Evidencia 2025
+        </button>
+
         <button id="main-play-btn" class="play-btn" onclick="playFragment()">
           ▶ Reproducir (<span id="start-time">00:23</span> - <span id="end-time">01:30</span>)
         </button>
@@ -585,6 +833,96 @@
         <button class="next-moment-btn" onclick="goToNextMoment()">
           Siguiente Momento ➔
         </button>
+      </div>
+    </div>
+
+    <!-- SCIENTIFIC INFOGRAPHIC MODAL -->
+    <div class="infographic-modal" id="infographic-modal">
+      <div class="info-modal-header">
+        <div class="info-modal-title-box">
+          <span class="info-badge">📊 INVESTIGACIÓN Y REVISIÓN CIENTÍFICA (2023 - 2025)</span>
+          <h2 class="info-title">Encefalomielitis Miálgica (EM/SFC) & Long COVID (IACCs)</h2>
+          <p class="info-subtitle">Síntesis de consensos clínicos de la Mayo Clinic (2023) y el Bateman Horne Center (2025)</p>
+        </div>
+        <button class="info-close-btn" onclick="toggleInfographic(false)">✕</button>
+      </div>
+
+      <div class="info-grid">
+        <!-- Card 1: Diagnostic Triad -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🩺</div>
+            <h3 class="info-card-title">Criterios Diagnósticos IOM/NAM (2015) & CDC</h3>
+          </div>
+          <div class="info-card-body">
+            <p style="margin-bottom:10px;">Para diagnosticar <strong>EM/SFC</strong> o <strong>Long COVID complejo</strong>, se requiere la presencia obligatoria de los siguientes 3 síntomas (gravedad moderada a severa >50% del tiempo durante más de 6 meses):</p>
+            <ul>
+              <li><strong>Fatiga Profunda e Incapacitante:</strong> No aliviada por el descanso y acompañada de una drástica reducción en la capacidad funcional previa.</li>
+              <li><strong>Malestar Pospesfuerzo (PEM):</strong> Empeoramiento fisiológico agudo tras esfuerzos mínimos.</li>
+              <li><strong>Sueño No Reparador:</strong> Disfunción severa de la arquitectura del sueño y ritmos circadianos.</li>
+            </ul>
+            <p style="margin-top:10px;"><em>+ Al menos 1 síntoma obligatorio adicional: Deterioro Cognitivo ("Niebla Mental") o Intolerancia Ortostática (POTS).</em></p>
+          </div>
+        </div>
+
+        <!-- Card 2: PEM Pathophysiology -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">⚡</div>
+            <h3 class="info-card-title">Fisiopatología del PEM (Post-Exertional Malaise)</h3>
+          </div>
+          <div class="info-card-body">
+            <p style="margin-bottom:10px;">El PEM es el <strong>síntoma patognomónico</strong> que diferencia a las afecciones postinfecciosas del desacondicionamiento común:</p>
+            <ul>
+              <li><strong>Respuesta Fisiológica Retrasada:</strong> El colapso bioenergético mitocondrial suele ocurrir <strong>24 a 48 horas después</strong> de la actividad desencadenante.</li>
+              <li><strong>Triggers Físicos, Cognitivos o Emocionales:</strong> Tareas simples (como ducharse, leer o conversar) pueden desencadenar un choque (*crash*).</li>
+              <li><strong>Duración Prolongada:</strong> El choque dura días, semanas o puede resultar en pérdidas funcionales permanentes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 3: Pacing vs GET -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🛑</div>
+            <h3 class="info-card-title">Manejo de Energía: PACING vs. GET</h3>
+          </div>
+          <div class="info-card-body">
+            <p style="margin-bottom:10px;">Estrategias de intervención en la actividad clínica:</p>
+            <ul>
+              <li><span class="tag-red">❌ GET (Terapia de Ejercicio Gradual):</span> <strong>CONTRAINDICADA</strong> por el CDC, NICE (2021) y Bateman Horne (2025). Desencadena PEM y produce daño físico grave.</li>
+              <li><span class="tag-green">✅ PACING (Gestión Energética):</span> La estrategia dorada. Consiste en operar estrictamente dentro del <em>"Sobre Energético" (Energy Envelope)</em> para prevenir recaídas y promover la estabilización biológica.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 4: Clinical Therapeutics -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">💊</div>
+            <h3 class="info-card-title">Tratamientos Sintomáticos Destacados</h3>
+          </div>
+          <div class="info-card-body">
+            <ul>
+              <li><strong>Neuroinflamación y Dolor:</strong> Naltrexona a Dosis Bajas (LDN), Piridostigmina, Dextrometorfano.</li>
+              <li><strong>Disfunción Autonómica e Intolerancia Ortostática (POTS):</strong> Cargas salinas/fluidos IV, medias de compresión, Fludrocortisona, Midodrina, Propranolol, Ivabradina.</li>
+              <li><strong>Síndrome de Activación Mastocitaria (MCAS):</strong> Bloqueadores H1/H2 (Cetirizina, Famotidina), Cromoglicato de Sodio.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scientific References & Citations -->
+      <div class="info-citations-box">
+        <div class="citations-header">
+          📚 Citas y Fuentes Bibliográficas de la Investigación
+        </div>
+        <ol class="citations-list">
+          <li><strong>Grach SL, Seltzer J, Chon TY, Ganesh R.</strong> <em>Diagnosis and Management of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.</em> Mayo Clinic Proceedings. 2023 Oct;98(10):1544-1552. DOI: 10.1016/j.mayocp.2023.07.032.</li>
+          <li><strong>Hoppers M, Yellman B, Bateman L, Khan Z, Haddad M, Powers C, Mooney A, Ruschioni T, et al.</strong> <em>Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs).</em> Bateman Horne Center, 1st Edition, 2025.</li>
+          <li><strong>Institute of Medicine (IOM) Committee on the Diagnostic Criteria for Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.</strong> <em>Beyond Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Redefining an Illness.</em> Washington (DC): National Academies Press (US); 2015.</li>
+          <li><strong>NICE (National Institute for Health and Care Excellence).</strong> <em>Myalgic encephalomyelitis (or encephalopathy)/chronic fatigue syndrome: diagnosis and management.</em> NICE guideline [NG206], 2021.</li>
+        </ol>
       </div>
     </div>
   </div>
@@ -667,7 +1005,6 @@
     let isPlayerReady = false;
 
     function onYouTubeIframeAPIReady() {
-      // Hook YT Player into native iframe to resolve file:// Error 153
       player = new YT.Player('youtube-player', {
         events: {
           'onReady': onPlayerReady,
@@ -688,7 +1025,8 @@
         banner.classList.add('fade-out-total');
         hideFocusSlide();
       } else if (event.data === YT.PlayerState.PAUSED) {
-        if (!document.getElementById('focus-slide-modal').classList.contains('active')) {
+        if (!document.getElementById('focus-slide-modal').classList.contains('active') &&
+            !document.getElementById('infographic-modal').classList.contains('active')) {
           banner.classList.remove('fade-out-total');
         }
       }
@@ -729,6 +1067,19 @@
     function hideFocusSlide() {
       document.getElementById('focus-backdrop').classList.remove('active');
       document.getElementById('focus-slide-modal').classList.remove('active');
+    }
+
+    function toggleInfographic(forceOpen) {
+      const modal = document.getElementById('infographic-modal');
+      const backdrop = document.getElementById('focus-backdrop');
+      if (forceOpen) {
+        if (isPlayerReady && player && typeof player.pauseVideo === 'function') player.pauseVideo();
+        backdrop.classList.add('active');
+        modal.classList.add('active');
+      } else {
+        backdrop.classList.remove('active');
+        modal.classList.remove('active');
+      }
     }
 
     function replayCurrentClip() {
@@ -801,6 +1152,7 @@
 
     function playFragment() {
       hideFocusSlide();
+      toggleInfographic(false);
       const banner = document.getElementById('overlay-banner');
       banner.classList.add('fade-out-total');
       
@@ -846,6 +1198,10 @@
     }
 
     document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        toggleInfographic(false);
+        hideFocusSlide();
+      }
       if (e.key === 'ArrowLeft') prevSlide();
       if (e.key === 'ArrowRight') nextSlide();
       if (e.key === ' ') {
