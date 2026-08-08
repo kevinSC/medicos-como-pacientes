@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctors as Patients: Presentación con Ilustraciones e Infografía</title>
+  <title>Doctors as Patients: Presentación e Infografía de Impacto Pantalla Completa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
@@ -63,20 +63,20 @@
       border: none;
     }
 
-    /* Visual Infographic Slide Frame (For Moments 7-11) */
+    /* Visual Infographic Slide Frame - FULL VIEWPORT UTILIZATION */
     .slide-visual-frame {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       z-index: 15;
       background: radial-gradient(circle at center, #111827 0%, #030712 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 30px;
+      padding: 20px 24px;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -87,20 +87,21 @@
       visibility: visible;
     }
 
+    /* Hero Card maximizing 97vw and 94vh space */
     .slide-card-hero {
-      width: 92vw;
-      max-width: 1300px;
-      background: rgba(15, 23, 42, 0.88);
+      width: 97vw;
+      height: 94vh;
+      background: rgba(15, 23, 42, 0.92);
       border: 2px solid var(--accent-cyan);
-      border-radius: 28px;
-      padding: 36px 44px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 60px rgba(6, 182, 212, 0.35);
+      border-radius: 24px;
+      padding: 28px 36px;
+      box-shadow: 0 25px 90px rgba(0, 0, 0, 0.95), 0 0 60px rgba(6, 182, 212, 0.4);
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      transform: translateY(30px) scale(0.98);
+      justify-content: space-between;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transform: translateY(20px) scale(0.99);
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -112,6 +113,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
 
     /* Pulsing Alarm Animation */
@@ -133,9 +135,9 @@
     .slide-tag {
       background: linear-gradient(135deg, var(--accent-red), #dc2626);
       color: #fff;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       font-weight: 900;
-      padding: 6px 18px;
+      padding: 8px 22px;
       border-radius: 20px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -143,31 +145,33 @@
     }
 
     .slide-source {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: var(--accent-amber);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .slide-title-text {
       font-family: var(--font-title);
-      font-size: 2.3rem;
+      font-size: 2.8rem;
       font-weight: 900;
-      line-height: 1.25;
+      line-height: 1.2;
       color: #ffffff;
       border-left: 8px solid var(--accent-cyan);
-      padding-left: 20px;
-      text-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+      padding-left: 24px;
+      text-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+      margin: 8px 0;
     }
 
-    /* Split Layout for Illustration Image & Stats */
+    /* Split Content Layout filling full height */
     .slide-content-split {
       display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 24px;
+      grid-template-columns: 520px 1fr;
+      gap: 32px;
       align-items: center;
+      flex: 1;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
       .slide-content-split {
         grid-template-columns: 1fr;
       }
@@ -175,11 +179,12 @@
 
     .slide-illustration-box {
       width: 100%;
-      height: 240px;
+      height: 100%;
+      max-height: 480px;
       border-radius: 20px;
       overflow: hidden;
-      border: 2px solid rgba(6, 182, 212, 0.4);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(6, 182, 212, 0.2);
+      border: 3px solid rgba(6, 182, 212, 0.5);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.3);
       position: relative;
     }
 
@@ -191,13 +196,21 @@
     }
 
     .slide-illustration-box:hover img {
-      transform: scale(1.05);
+      transform: scale(1.04);
+    }
+
+    .right-content-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+      justify-content: center;
     }
 
     .slide-stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     /* Staggered Card Animation */
@@ -213,13 +226,13 @@
     }
 
     .stat-box {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 18px;
-      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 24px 26px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 10px;
       position: relative;
       overflow: hidden;
       transition: all 0.3s ease;
@@ -227,16 +240,16 @@
     }
 
     .stat-box:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.09);
       border-color: var(--accent-cyan);
       transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(6, 182, 212, 0.25);
+      box-shadow: 0 14px 36px rgba(6, 182, 212, 0.3);
     }
 
     /* Animated Stat Number */
     .stat-number {
       font-family: var(--font-title);
-      font-size: 2.6rem;
+      font-size: 3.4rem;
       font-weight: 900;
       color: var(--accent-cyan);
       line-height: 1;
@@ -247,46 +260,47 @@
 
     .stat-number.red {
       color: var(--accent-red);
-      text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+      text-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
     }
 
     .stat-number.amber {
       color: var(--accent-amber);
-      text-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+      text-shadow: 0 0 25px rgba(251, 191, 36, 0.7);
     }
 
     .stat-number.cyan {
       color: var(--accent-cyan);
-      text-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+      text-shadow: 0 0 25px rgba(6, 182, 212, 0.7);
     }
 
     .stat-number.green {
       color: var(--accent-green);
-      text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+      text-shadow: 0 0 25px rgba(16, 185, 129, 0.7);
     }
 
     .stat-label {
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      color: #f1f5f9;
+      color: #f8fafc;
       line-height: 1.3;
     }
 
     .stat-desc {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      line-height: 1.45;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.5;
     }
 
     /* APA Citation Box inside Card Footer */
     .apa-card-footer {
-      background: rgba(6, 182, 212, 0.08);
-      border: 1px solid rgba(6, 182, 212, 0.25);
-      border-radius: 14px;
-      padding: 10px 16px;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      line-height: 1.4;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin-top: 10px;
     }
 
     .apa-card-footer strong {
@@ -296,11 +310,11 @@
     /* Creative Dynamic Energy Gauge Bar (PEM Visualizer) */
     .energy-gauge-container {
       width: 100%;
-      height: 10px;
+      height: 14px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 4px;
+      margin-top: 6px;
       position: relative;
     }
 
@@ -316,7 +330,7 @@
       100% {
         width: 15%;
         background: var(--accent-red);
-        box-shadow: 0 0 12px var(--accent-red);
+        box-shadow: 0 0 15px var(--accent-red);
       }
     }
 
@@ -839,7 +853,7 @@
       <iframe id="youtube-player" src="https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?enablejsapi=1&rel=0&start=23&cc_load_policy=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <!-- Visual Infographic Slide Frame (Moments 7-11) -->
+    <!-- Visual Infographic Slide Frame (Moments 7-11) - MAXIMIZED VIEWPORT SPACE -->
     <div class="slide-visual-frame" id="slide-visual-frame">
       <div class="slide-card-hero">
         <div class="slide-badge-row">
@@ -853,28 +867,31 @@
 
         <!-- Creative Interactive Gauge Bar for PEM / Energy -->
         <div id="gauge-wrapper" style="display:none; flex-direction:column; gap:4px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:800; color:var(--accent-red);">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:800; color:var(--accent-red);">
             <span>⚡ Nivel de Energía Mitocondrial (Post-Esfuerzo Mínimo)</span>
-            <span id="gauge-percent-text">100% ➔ 15% (COLAPSO)</span>
+            <span id="gauge-percent-text">100% ➔ 15% (COLAPSO METABÓLICO)</span>
           </div>
           <div class="energy-gauge-container">
             <div class="energy-gauge-bar"></div>
           </div>
         </div>
 
-        <!-- Split Content Layout with Generated Illustration & Animated Stats Grid -->
+        <!-- Split Content Layout with Large Illustration Image & Expanded Right Pane -->
         <div class="slide-content-split">
           <div class="slide-illustration-box">
             <img id="slide-illustration-img" src="images/moment_7.jpg" alt="Ilustración Médica">
           </div>
-          <div class="slide-stats-grid" id="slide-stats-grid">
-            <!-- Dynamic animated stats injected here -->
-          </div>
-        </div>
+          
+          <div class="right-content-pane">
+            <div class="slide-stats-grid" id="slide-stats-grid">
+              <!-- Dynamic animated stats injected here -->
+            </div>
 
-        <!-- APA Citation Box at Slide Card Footer -->
-        <div class="apa-card-footer" id="apa-card-footer">
-          <strong>Cita APA (7ª ed.):</strong> <span id="slide-apa-text">Hoppers, M., Yellman, B., & Bateman, L. (2025). Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs). Bateman Horne Center.</span>
+            <!-- APA Citation Box at Slide Card Footer -->
+            <div class="apa-card-footer" id="apa-card-footer">
+              <strong>Cita APA (7ª ed.):</strong> <span id="slide-apa-text">Hoppers, M., Yellman, B., & Bateman, L. (2025). Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs). Bateman Horne Center.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1044,7 +1061,7 @@
         apaCitation: "Boumeester, G., & Plantinga, J. (Directores). (2023). Doctors as Patients [Documental; Testimonio de Escucha]. Somatics Film Production. https://youtu.be/J0ywwLIfH_w?t=3179"
       },
 
-      // SECCIÓN INFOGRÁFICA DE IMPACTO ALARMANTE CON ILUSTRACIONES Y CITAS APA 7ª ED. (Momento 7 a 11)
+      // SECCIÓN INFOGRÁFICA PANTALLA COMPLETA CON ILUSTRACIONES Y CITAS APA 7ª ED. (Momento 7 a 11)
       {
         id: 7,
         type: 'infographic',
@@ -1056,9 +1073,9 @@
         dialogueEN: "ME/CFS and Long COVID destroy productive life. Over 75% become unable to work full-time, and 25% remain bedridden in dark rooms unable to tolerate light or sound.",
         apaCitation: "Hoppers, M., Yellman, B., Bateman, L., Khan, Z., Haddad, M., Powers, C., Mooney, A., & Ruschioni, T. (2025). Clinical Care Guide: Managing ME/CFS, Long COVID, and Infection-Associated Chronic Conditions (IACCs) (1ª ed., pp. 6–12). Bateman Horne Center.",
         stats: [
-          { targetVal: 75, prefix: "> ", suffix: "%", label: "Incapacidad Laboral", desc: "Pérdida total o severa de la capacidad de mantener un empleo o estudio.", color: "red" },
-          { targetVal: 25, prefix: "", suffix: "%", label: "Enfermedad Severa", desc: "Confinados permanentemente en cama o sillas de ruedas en cuartos oscuros.", color: "red" },
-          { targetVal: 67, prefix: "", suffix: " Mil M$", label: "Impacto Económico", desc: "Costo económico anual estimado por pérdida de productividad y salud.", color: "amber" }
+          { targetVal: 75, prefix: "> ", suffix: "%", label: "Incapacidad Laboral Severa", desc: "Pérdida total de la capacidad de mantener un trabajo o carrera profesional.", color: "red" },
+          { targetVal: 25, prefix: "", suffix: "%", label: "Pacientes Encamados", desc: "Confinados permanentemente en cama o cuartos oscuros sin tolerar estimulación.", color: "red" },
+          { targetVal: 67, prefix: "", suffix: " Mil M$", label: "Pérdida Económica Anual", desc: "Impacto económico gigantesco estimado por pérdida de productividad y costos médicos.", color: "amber" }
         ]
       },
       {
@@ -1072,9 +1089,9 @@
         dialogueEN: "Prescribing exercise to these patients causes severe physical harm. 80-90% experience catastrophic relapses. CDC and WHO have formally CONTRAINDICATED Graded Exercise Therapy (GET).",
         apaCitation: "National Institute for Health and Care Excellence. (2021). Myalgic encephalomyelitis (or encephalopathy)/chronic fatigue syndrome: Diagnosis and management (NICE Guideline NG206). https://www.nice.org.uk/guidance/ng206 ; Grach, S. L., Seltzer, J., Chon, T. Y., & Ganesh, R. (2023). Mayo Clinic Proceedings, 98(10), 1544–1552.",
         stats: [
-          { targetVal: 90, prefix: "", suffix: "%", label: "Recaída por Ejercicio", desc: "El ejercicio gradual (GET) destruye la capacidad celular y causa daño permanente.", color: "red" },
-          { textDisplay: "PROHIBIDO", label: "GET Contraindicado", desc: "Retirado de todas las guías médicas internacionales oficiales por peligro biológico.", color: "amber" },
-          { textDisplay: "PACING", label: "Regla Dorada", desc: "Gestión estricta de energía dentro del Sobre Energético para evitar colapsos.", color: "cyan" }
+          { targetVal: 90, prefix: "", suffix: "%", label: "Recaída por Ejercicio (GET)", desc: "El ejercicio progresivo destruye la reserva metabólica y produce daño permanente.", color: "red" },
+          { textDisplay: "PROHIBIDO", label: "GET Contraindicado", desc: "Retirado de todas las guías médicas internacionales por causar deterioro fisiológico.", color: "amber" },
+          { textDisplay: "PACING", label: "Regla Dorada", desc: "Gestión estricta de energía dentro del Sobre Energético para prevenir colapsos.", color: "cyan" }
         ]
       },
       {
@@ -1088,9 +1105,9 @@
         dialogueEN: "Patients wait between 3 and 5 years to receive an accurate diagnosis. More than 84% of affected individuals remain undiagnosed and neglected.",
         apaCitation: "Institute of Medicine Committee on the Diagnostic Criteria for Myalgic Encephalomyelitis/Chronic Fatigue Syndrome. (2015). Beyond myalgic encephalomyelitis/chronic fatigue syndrome: Redefining an illness. The National Academies Press. https://doi.org/10.17226/19012",
         stats: [
-          { targetVal: 5, prefix: "3 a ", suffix: " Años", label: "Años de Demora", desc: "Tiempo medio que tarda un paciente en ser escuchado y diagnosticado.", color: "amber" },
-          { targetVal: 84, prefix: "> ", suffix: "%", label: "Sin Diagnóstico", desc: "Viven etiquetados erróneamente con ansiedad o depresión sin ayuda real.", color: "red" },
-          { targetVal: 9, prefix: "", suffix: " de 10", label: "Desinformación", desc: "Médicos de atención primaria no han recibido formación sobre EM/SFC en su carrera.", color: "amber" }
+          { targetVal: 5, prefix: "3 a ", suffix: " Años", label: "Demora Diagnóstica", desc: "Tiempo medio de peregrijane médico para ser escuchado y diagnosticado.", color: "amber" },
+          { targetVal: 84, prefix: "> ", suffix: "%", label: "Viven Sin Diagnóstico", desc: "Etiquetados erróneamente con ansiedad o depresión sin recibir ayuda médica real.", color: "red" },
+          { targetVal: 9, prefix: "", suffix: " de 10", label: "Sin Formación Médica", desc: "Médicos de atención primaria no han recibido capacitación académica sobre EM/SFC.", color: "amber" }
         ]
       },
       {
