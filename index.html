@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctors as Patients: Modo Proyección</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-black: #000000;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-amber: #fbbf24;
+      --text-white: #ffffff;
+      --text-gray: #94a3b8;
+      --glass-bg: rgba(9, 13, 22, 0.94);
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      overflow: hidden;
+    }
+
+    .viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+    }
+
+    .video-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Blur Backdrop on Auto-Stop Focus Mode */
+    .focus-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 60;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .focus-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Top-Left Banner Overlay */
+    .top-overlay-banner {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      max-width: 620px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      padding: 18px 22px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+    }
+
+    .top-overlay-banner.fade-out-total {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transform: translateY(-20px) !important;
+    }
+
+    .banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .banner-tag {
+      background: rgba(6, 182, 212, 0.25);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    .banner-speaker {
+      font-size: 0.85rem;
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    .banner-headline {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--text-white);
+    }
+
+    .banner-dialogue {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #cbd5e1;
+      border-left: 4px solid var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+
+    .banner-dialogue strong {
+      color: var(--accent-cyan);
+    }
+
+    .banner-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-gray);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-cyan);
+      color: #000;
+      border-color: var(--accent-cyan);
+    }
+
+    .play-btn {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.04);
+    }
+
+    /* MASSIVE PROJECTION FOCUS SLIDE MODAL */
+    .focus-slide-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -45%) scale(0.95);
+      width: 92vw;
+      max-width: 1250px;
+      background: rgba(10, 15, 26, 0.96);
+      border: 3px solid var(--accent-cyan);
+      border-radius: 32px;
+      padding: 48px 56px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 60px rgba(6, 182, 212, 0.6);
+      z-index: 70;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .focus-slide-modal.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .focus-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent-amber), #f59e0b);
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 24px;
+      font-size: 1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      align-self: flex-start;
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+    }
+
+    .focus-headline {
+      font-family: var(--font-title);
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(6, 182, 212, 0.9), 0 0 60px rgba(6, 182, 212, 0.5);
+      border-left: 8px solid var(--accent-cyan);
+      padding-left: 24px;
+    }
+
+    .focus-speaker {
+      font-size: 1.35rem;
+      color: var(--accent-amber);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .focus-dialogue {
+      background: rgba(6, 182, 212, 0.12);
+      border: 2px solid rgba(6, 182, 212, 0.35);
+      padding: 24px 28px;
+      border-radius: 18px;
+      font-size: 1.35rem;
+      line-height: 1.6;
+      color: #f8fafc;
+    }
+
+    .focus-dialogue strong {
+      color: var(--accent-cyan);
+      font-weight: 800;
+    }
+
+    .focus-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .replay-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .next-moment-btn {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 16px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 30px rgba(6, 182, 212, 0.6);
+    }
+
+    /* LEFT SIDEBAR TRIGGER ZONE */
+    .sidebar-trigger-zone {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 100vh;
+      z-index: 90;
+    }
+
+    .sidebar-peek-hint {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      background: rgba(6, 182, 212, 0.25);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      padding: 14px 8px;
+      border-radius: 24px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    /* LEFT DESPLEGABLE SIDEBAR */
+    .left-sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 360px;
+      height: 100vh;
+      background: rgba(7, 10, 18, 0.96);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-right: 2px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 20px 0 50px rgba(0, 0, 0, 0.9);
+      z-index: 100;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar-trigger-zone:hover + .left-sidebar,
+    .left-sidebar:hover,
+    .left-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 16px;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-close-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: var(--text-gray);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-close-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    .sidebar-moments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .sidebar-moment-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-moment-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .sidebar-moment-item.active {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(59, 130, 246, 0.25));
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    }
+
+    .item-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .item-id-badge {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.2);
+      padding: 3px 10px;
+      border-radius: 8px;
+    }
+
+    .sidebar-moment-item.active .item-id-badge {
+      background: var(--accent-cyan);
+      color: #000;
+    }
+
+    .item-time {
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      font-weight: 700;
+    }
+
+    .item-title {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.35;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .sidebar-footer-controls {
+      display: flex;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .sidebar-nav-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .sidebar-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="viewport">
+    <div class="video-frame">
+      <!-- Native Embed with YouTube NoCookie to prevent Error 153 in file:// protocol -->
+      <iframe id="youtube-player" src="https://www.youtube-nocookie.com/embed/J0ywwLIfH_w?enablejsapi=1&rel=0&start=23&cc_load_policy=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Video Blur Backdrop -->
+    <div class="focus-backdrop" id="focus-backdrop"></div>
+
+    <!-- LEFT TRIGGER ZONE -->
+    <div class="sidebar-trigger-zone">
+      <div class="sidebar-peek-hint">📋 Menu</div>
+    </div>
+
+    <!-- LEFT DESPLEGABLE SIDEBAR -->
+    <aside class="left-sidebar" id="left-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          🎬 Momentos Clave
+        </div>
+        <button class="sidebar-close-btn" onclick="toggleSidebar(false)">✕</button>
+      </div>
+
+      <div class="sidebar-moments-list" id="sidebar-moments-list">
+        <!-- Generated dynamically -->
+      </div>
+
+      <div class="sidebar-footer-controls">
+        <button id="side-prev-btn" class="sidebar-nav-btn" onclick="prevSlide()">‹ Anterior</button>
+        <button id="side-next-btn" class="sidebar-nav-btn" onclick="nextSlide()">Siguiente ›</button>
+      </div>
+    </aside>
+
+    <!-- Top-Left Overlay Banner -->
+    <div class="top-overlay-banner" id="overlay-banner">
+      <div class="banner-header">
+        <span class="banner-tag" id="banner-tag">Momento 1 / 6</span>
+        <span class="banner-speaker" id="banner-speaker">— Jolien Plantinga (Médico General)</span>
+      </div>
+
+      <h2 class="banner-headline" id="banner-headline">
+        “Cuando más aprendí fue cuando me ascendieron a paciente”
+      </h2>
+
+      <div class="banner-dialogue" id="banner-dialogue">
+        <strong>Diálogo:</strong> "Era residente de psiquiatría hasta mi infección por covid... Pero ahora estoy incapacitada al cien por cien para trabajar."
+      </div>
+
+      <div class="banner-actions">
+        <div class="lang-toggle">
+          <button id="lang-es-btn" class="lang-btn active" onclick="setLang('es')">ES 🇪🇸</button>
+          <button id="lang-en-btn" class="lang-btn" onclick="setLang('en')">EN 🇬🇧</button>
+        </div>
+
+        <button id="main-play-btn" class="play-btn" onclick="playFragment()">
+          ▶ Reproducir (<span id="start-time">00:23</span> - <span id="end-time">01:30</span>)
+        </button>
+      </div>
+    </div>
+
+    <!-- MASSIVE PROJECTION CENTER FOCUS SLIDE MODAL -->
+    <div class="focus-slide-modal" id="focus-slide-modal">
+      <span class="focus-badge">✨ CITA CLAVE DEL MOMENTO <span id="focus-moment-id">1</span></span>
+      <h2 class="focus-headline" id="focus-headline">
+        “Cuando más aprendí fue cuando me ascendieron a paciente”
+      </h2>
+      <p class="focus-speaker" id="focus-speaker">— Jolien Plantinga & Gitte Boumeester</p>
+      <div class="focus-dialogue" id="focus-dialogue">
+        <strong>Diálogo Destacado:</strong> "Era residente de psiquiatría hasta mi infección por covid. Me faltaba un año para convertirme en psiquiatra. Pero ahora estoy incapacitada al 100% para trabajar."
+      </div>
+      <div class="focus-actions">
+        <button class="replay-btn" onclick="replayCurrentClip()">
+          ↺ Repetir Fragmento
+        </button>
+        <button class="next-moment-btn" onclick="goToNextMoment()">
+          Siguiente Momento ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    const slidesData = [
+      {
+        id: 1,
+        startTimeStr: "00:23",
+        endTimeStr: "01:30",
+        startSeconds: 23,
+        endSeconds: 90,
+        headline: "“Cuando más aprendí fue cuando me ascendieron a paciente”",
+        speaker: "— Jolien Plantinga & Gitte Boumeester",
+        dialogueES: "Era residente de psiquiatría hasta mi infección por covid. Me faltaba un año para convertirme en psiquiatra. Pero ahora estoy incapacitada al 100% para trabajar.",
+        dialogueEN: "I was a psychiatry resident until my COVID infection. I had another year to become a psychiatrist. But now I am 100% unfit for work."
+      },
+      {
+        id: 2,
+        startTimeStr: "04:28",
+        endTimeStr: "06:10",
+        startSeconds: 268,
+        endSeconds: 370,
+        headline: "“Mi única actividad del día es bajar de la cama de arriba a la cama de abajo”",
+        speaker: "— Jolien Plantinga & Peter Hulshof",
+        dialogueES: "¿Cómo es su día ahora como paciente? Mi día es ir de mi cama de arriba a la cama de abajo. Esa es en realidad mi única actividad del día.",
+        dialogueEN: "What is your day like now as a patient? My day is going from my bed upstairs to the bed downstairs. That is actually my only activity of the day."
+      },
+      {
+        id: 3,
+        startTimeStr: "12:31",
+        endTimeStr: "14:30",
+        startSeconds: 751,
+        endSeconds: 870,
+        headline: "“Yo misma como médico tenía prejuicios... no quería ser ese tipo de paciente”",
+        speaker: "— Jolien Plantinga (Médico General)",
+        dialogueES: "Tenía los prejuicios que tienen muchos médicos... pensaba que los pacientes de fatiga crónica se inventaban la enfermedad. Hasta que vi a enfermos graves encamados en cuartos oscuros.",
+        dialogueEN: "I had the prejudices that many doctors have... I thought chronic fatigue patients were making it up. Until I experienced it and saw severely ill patients bedridden in dark rooms."
+      },
+      {
+        id: 4,
+        startTimeStr: "16:52",
+        endTimeStr: "18:00",
+        startSeconds: 1012,
+        endSeconds: 1080,
+        headline: "“10 minutos en la consulta no ven cómo descarrila completamente tu vida al volver a casa”",
+        speaker: "— Laura (Nefróloga) & Jolien Plantinga",
+        dialogueES: "Con sólo ver al paciente una vez 10 minutos en la consulta, los médicos no se dan cuenta cómo descarrila completamente su vida al volver a casa.",
+        dialogueEN: "Just seeing a patient once for 10 minutes in the clinic, doctors don't realize how someone's life is completely derailed when they go back home."
+      },
+      {
+        id: 5,
+        startTimeStr: "41:01",
+        endTimeStr: "42:00",
+        startSeconds: 2461,
+        endSeconds: 2520,
+        headline: "“Siempre me enorgullecí de ser médico, pero ver miles de enfermos ignorados me da vergüenza”",
+        speaker: "— Gitte Boumeester & Laura",
+        dialogueES: "Siempre me enorgullecí de ser médico. Pensaba que los médicos hacían todo lo posible. Pero ahora veo a miles de personas enfermas en sus casas, abandonadas, y me da una profunda vergüenza.",
+        dialogueEN: "I was always proud to be a doctor. I thought doctors did everything possible. But now I see thousands of sick people in their homes, abandoned, and it fills me with shame."
+      },
+      {
+        id: 6,
+        startTimeStr: "52:59",
+        endTimeStr: "55:51",
+        startSeconds: 3179,
+        endSeconds: 3351,
+        headline: "“Los pacientes vienen diciendo la verdad desde 1990: es hora de empezar a escucharlos”",
+        speaker: "— Médico Evaluador de la Seguridad Social (GMD)",
+        dialogueES: "Cuando trabajaba como médico de aseguradora, pensaba que estos pacientes solo estaban cansados. Los pacientes dicen la verdad desde 1990. Es hora de escuchar atentamente a los pacientes.",
+        dialogueEN: "When I worked as an insurance doctor, I thought these patients were just tired. Patients have been telling the truth since 1990. It is time to listen carefully to patients."
+      }
+    ];
+
+    let currentIndex = 0;
+    let player = null;
+    let currentLang = 'es';
+    let checkIntervalTimer = null;
+    let isPlayerReady = false;
+
+    function onYouTubeIframeAPIReady() {
+      // Hook YT Player into native iframe to resolve file:// Error 153
+      player = new YT.Player('youtube-player', {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      isPlayerReady = true;
+      updateSlide(0);
+      startAutoStopCheck();
+    }
+
+    function onPlayerStateChange(event) {
+      const banner = document.getElementById('overlay-banner');
+      if (event.data === YT.PlayerState.PLAYING) {
+        banner.classList.add('fade-out-total');
+        hideFocusSlide();
+      } else if (event.data === YT.PlayerState.PAUSED) {
+        if (!document.getElementById('focus-slide-modal').classList.contains('active')) {
+          banner.classList.remove('fade-out-total');
+        }
+      }
+    }
+
+    function startAutoStopCheck() {
+      if (checkIntervalTimer) clearInterval(checkIntervalTimer);
+      checkIntervalTimer = setInterval(() => {
+        if (isPlayerReady && player && typeof player.getPlayerState === 'function') {
+          if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+            const currentTime = player.getCurrentTime();
+            const targetEnd = slidesData[currentIndex].endSeconds;
+            if (currentTime >= targetEnd) {
+              player.pauseVideo();
+              showFocusSlide();
+            }
+          }
+        }
+      }, 250);
+    }
+
+    function showFocusSlide() {
+      const banner = document.getElementById('overlay-banner');
+      banner.classList.add('fade-out-total');
+
+      const item = slidesData[currentIndex];
+      document.getElementById('focus-moment-id').textContent = item.id;
+      document.getElementById('focus-headline').textContent = item.headline;
+      document.getElementById('focus-speaker').textContent = item.speaker;
+      
+      const dialogueText = currentLang === 'es' ? item.dialogueES : item.dialogueEN;
+      document.getElementById('focus-dialogue').innerHTML = `<strong>Diálogo Destacado:</strong> "${dialogueText}"`;
+
+      document.getElementById('focus-backdrop').classList.add('active');
+      document.getElementById('focus-slide-modal').classList.add('active');
+    }
+
+    function hideFocusSlide() {
+      document.getElementById('focus-backdrop').classList.remove('active');
+      document.getElementById('focus-slide-modal').classList.remove('active');
+    }
+
+    function replayCurrentClip() {
+      hideFocusSlide();
+      playFragment();
+    }
+
+    function goToNextMoment() {
+      hideFocusSlide();
+      if (currentIndex < slidesData.length - 1) {
+        updateSlide(currentIndex + 1);
+        playFragment();
+      } else {
+        updateSlide(0);
+        playFragment();
+      }
+    }
+
+    function toggleSidebar(forceOpen) {
+      const sidebar = document.getElementById('left-sidebar');
+      if (forceOpen !== undefined) {
+        if (forceOpen) sidebar.classList.add('open');
+        else sidebar.classList.remove('open');
+      } else {
+        sidebar.classList.toggle('open');
+      }
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= slidesData.length) return;
+      currentIndex = index;
+      const item = slidesData[currentIndex];
+
+      hideFocusSlide();
+      const banner = document.getElementById('overlay-banner');
+      banner.classList.remove('fade-out-total');
+
+      document.getElementById('banner-tag').textContent = `Momento ${item.id} / ${slidesData.length}`;
+      document.getElementById('banner-speaker').textContent = item.speaker;
+      document.getElementById('banner-headline').textContent = item.headline;
+      document.getElementById('start-time').textContent = item.startTimeStr;
+      document.getElementById('end-time').textContent = item.endTimeStr;
+
+      updateDialogueText();
+
+      if (isPlayerReady && player && typeof player.seekTo === 'function') {
+        player.seekTo(item.startSeconds, true);
+      }
+
+      renderSidebarList();
+      document.getElementById('side-prev-btn').disabled = currentIndex === 0;
+      document.getElementById('side-next-btn').disabled = currentIndex === slidesData.length - 1;
+    }
+
+    function updateDialogueText() {
+      const item = slidesData[currentIndex];
+      const text = currentLang === 'es' ? item.dialogueES : item.dialogueEN;
+      document.getElementById('banner-dialogue').innerHTML = `<strong>Diálogo:</strong> "${text}"`;
+      if (document.getElementById('focus-slide-modal').classList.contains('active')) {
+        document.getElementById('focus-dialogue').innerHTML = `<strong>Diálogo Destacado:</strong> "${text}"`;
+      }
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('lang-es-btn').classList.toggle('active', lang === 'es');
+      document.getElementById('lang-en-btn').classList.toggle('active', lang === 'en');
+      updateDialogueText();
+    }
+
+    function playFragment() {
+      hideFocusSlide();
+      const banner = document.getElementById('overlay-banner');
+      banner.classList.add('fade-out-total');
+      
+      const item = slidesData[currentIndex];
+
+      if (isPlayerReady && player) {
+        if (typeof player.seekTo === 'function') {
+          player.seekTo(item.startSeconds, true);
+        }
+        if (typeof player.playVideo === 'function') {
+          player.playVideo();
+        }
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) updateSlide(currentIndex - 1);
+    }
+
+    function nextSlide() {
+      if (currentIndex < slidesData.length - 1) updateSlide(currentIndex + 1);
+    }
+
+    function renderSidebarList() {
+      const container = document.getElementById('sidebar-moments-list');
+      container.innerHTML = '';
+      slidesData.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = `sidebar-moment-item ${idx === currentIndex ? 'active' : ''}`;
+        div.onclick = () => {
+          updateSlide(idx);
+          playFragment();
+        };
+        div.innerHTML = `
+          <div class="item-top-row">
+            <span class="item-id-badge">Momento ${item.id}</span>
+            <span class="item-time">${item.startTimeStr}</span>
+          </div>
+          <div class="item-title">${item.headline}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === ' ') {
+        e.preventDefault();
+        if (isPlayerReady && player && typeof player.getPlayerState === 'function') {
+          const state = player.getPlayerState();
+          if (state === YT.PlayerState.PLAYING) player.pauseVideo();
+          else player.playVideo();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
